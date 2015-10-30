@@ -2,18 +2,18 @@
 void createSelectedSquareBasedOnCells() {  
      
       // let mouse hovering on cells not on pixels
-     int xCellOver = int(map(mouseX, 0, width, 0, width/cellSize));
+     int xCellOver = int(map(mouseX, 0, width-1, 0, (width-1)/cellSize));
 
       // constrain mouseX or xCellOver only hover the first half cols of cells grid, 
       // also it cannot hover on the last col of first half
       // ??? decide between width/cellSize/2-1 and width/cellSize/2 ????
-      xCellOver = constrain(xCellOver, 0, width/cellSize/2);         
+      xCellOver = constrain(xCellOver, 0, (width-1)/cellSize/2);         
 
       // mouseY or yCellOver can hover over any cell of cells grid, but not on pixels
-      int yCellOver = int(map(mouseY, 0, height, 0, height/cellSize));
+      int yCellOver = int(map(mouseY, 0, height-1, 0, (height-1)/cellSize));
 
       // constrain yCellOver/mouseY only hover on first half of rows of cells grid
-      yCellOver = constrain(yCellOver, 0, height/cellSize/2);  
+      yCellOver = constrain(yCellOver, 0, (height-1)/cellSize/2);  
       
       // *********** from (mouseX, mouseY) right 60, down 60, is selectedSquare grid
       for (int xCell=xCellOver; xCell<xCellOver+60; xCell++) {

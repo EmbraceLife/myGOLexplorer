@@ -6,8 +6,8 @@
 void drawCellsGrid(int cellSize, int[][] cells) {
   
   // loop through every cell in grid
-  for (int x=0; x<width/cellSize; x++) {              
-   for (int y=0; y<height/cellSize; y++) { 
+  for (int x=0; x<(width-1)/cellSize; x++) {              
+   for (int y=0; y<(height-1)/cellSize; y++) { 
      
      // check value of each cell and set fill color accordingly
      if (cells[x][y] == 1) {
@@ -23,5 +23,3 @@ void drawCellsGrid(int cellSize, int[][] cells) {
    }
   }
 }
-
-   

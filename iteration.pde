@@ -29,15 +29,15 @@ void iteration() {
  // *************************** 1. save a copy to buffer first, then iterate ***************************
 
  // Save cells to buffer (so we opeate with one array keeping the other intact)
- for (int x=0; x<width/cellSize; x++) {
-   for (int y=0; y<height/cellSize; y++) {
+ for (int x=0; x<(width-1)/cellSize; x++) {
+   for (int y=0; y<(height-1)/cellSize; y++) {
      cellsBuffer[x][y] = cells[x][y];
    }
  }
 
  //  ****************************** 2. Visit each cell: *********************************************
- for (int x=0; x<width/cellSize; x++) {
-   for (int y=0; y<height/cellSize; y++) {
+ for (int x=0; x<(width-1)/cellSize; x++) {
+   for (int y=0; y<(height-1)/cellSize; y++) {
       
       
      // ************************ 2.1 sum up alive neighbours for each cell ************************
@@ -55,7 +55,7 @@ void iteration() {
        for (int yy=y-1; yy<=y+1;yy++) {  
           
          // ************ if (xx,yy) as neighbour cell's x and y are within grid, not outside
-         if (((xx>=0)&&(xx<width/cellSize))&&((yy>=0)&&(yy<height/cellSize))) { 
+         if (((xx>=0)&&(xx<(width-1)/cellSize))&&((yy>=0)&&(yy<(height-1)/cellSize))) { 
            // Make sure you are not out of bounds, but it can be on the edge cell either 0 or 
            // width/cellSize-1 and height/cellSize-1 are edge cell lines
             

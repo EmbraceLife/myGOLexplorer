@@ -1,13 +1,9 @@
 
-
-
-  // ************************2.2 give each cell a random life and death value ************************
-  
 void randomizeCellsGrid() {
   // loop through every cell in grid
   // x, y are index of cells, not index of pixels
-  for (int x=0; x<width/cellSize; x++) {              
-   for (int y=0; y<height/cellSize; y++) {           
+  for (int x=0; x<(width-1)/cellSize; x++) {              
+   for (int y=0; y<(height-1)/cellSize; y++) {           
 
      // each cell has its own (x,y) and its own random number: state
      float state = random (100);        

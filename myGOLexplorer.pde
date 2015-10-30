@@ -110,8 +110,9 @@ void setup() {
 
   // ****************** 1. create canvas
   // create canvas 600x600 pixels
+  // create canvas 601x601 pixels to give more space for edges
 
-  size (600, 600);                            
+  size (601, 601);                            
 
 
   // setupGrids();
@@ -121,15 +122,15 @@ void setup() {
   // create a grid with specified number of cols and rows
   // columns = width/cellSize; rows = height/cellSize; size of cell = 5pixel x 5pixel
 
-  cells = new int[width/cellSize][height/cellSize];        
+  cells = new int[(width-1)/cellSize][(height-1)/cellSize];        
 
   // Instantiate cells buffer: just cope cells content
 
-  cellsBuffer = new int[width/cellSize][height/cellSize];
+  cellsBuffer = new int[(width-1)/cellSize][(height-1)/cellSize];
 
 
-  selectedSquare = new int[width/cellSize/2][height/cellSize/2];
-  selectedSquareBuffer = new int[width/cellSize/2][height/cellSize/2];
+  selectedSquare = new int[(width-1)/cellSize/2][(height-1)/cellSize/2];
+  selectedSquareBuffer = new int[(width-1)/cellSize/2][(height-1)/cellSize/2];
   // don't hide edges/ jaggs
   noSmooth();                                 
 
@@ -229,8 +230,8 @@ void draw() {
 
 
       // once referenceLocation toggled true, insert selectedSquare back to cells' appropriate place
-      for (int x=0; x<width/enlargeSize; x++) {
-        for (int y=0; y<height/enlargeSize; y++) {
+      for (int x=0; x<(width-1)/enlargeSize; x++) {
+        for (int y=0; y<(height-1)/enlargeSize; y++) {
           cells[saveLocationX+x][saveLocationY+y] = selectedSquare[x][y];
         }
       }
@@ -394,8 +395,8 @@ void keyPressed() {
   // ************************ press c to set all cells to death value ************************
 
   if (key=='c' || key == 'C') {               // press C or c to Clear all
-    for (int x=0; x<width/cellSize; x++) {
-      for (int y=0; y<height/cellSize; y++) {
+    for (int x=0; x<(width-1)/cellSize; x++) {
+      for (int y=0; y<(height-1)/cellSize; y++) {
         cells[x][y] = 0; // Save all to zero
       }
     }
