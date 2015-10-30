@@ -27,7 +27,7 @@
 // 4. there must set probability of alive cells at initial stage: probabilityOfAliveAtStart
 // 5. there must set speed of regeneration of all cells: interval, lastRecordedTime
 // 6. there must differ alive and death color: alive, dead
-// 7. there must be many toggle buttons: pause, enlarge
+// 7. there must be many toggle buttons: pause, enlarge, referenceLocation, makeSelection, iterateStepy
 
 
 
@@ -87,6 +87,8 @@ boolean enlarge = false;
 boolean referenceLocation = false;  // key location to be remembered
 boolean makeSelection = false; // key button to instantiate selectedSquare from cells
 boolean iterateStepy = false; // key to allow iteration steps
+
+
 // ***********************************************************************************************
 // ***************************  what you want in setup()  ***********************************************
 // ************************************************************************************************************
@@ -95,11 +97,10 @@ boolean iterateStepy = false; // key to allow iteration steps
 /*  
  1. make up your mind on the size of canvas
  2. setupGrids:  --> only set value for each cell in grids 
- (if make it a function, performance is going down!!!!!!!!!!!!!!!!!!!! check z function)
- 2.1 instantiate the cols and rows of grids: cells and cellsBuffer
- 2.2 specify each value of cells of grids: 
- below15% chance to be alive (value 1), more than 15% chance dead (value 0)
- 2.3 shall we create selectedSquare and selectedSquareBuffer here too ????????????
+   2.1 instantiate the cols and rows of grids: cells and cellsBuffer
+   2.2 specify each value of cells of grids: 
+     below15% chance to be alive (value 1), more than 15% chance dead (value 0)
+   2.3 shall we create selectedSquare and selectedSquareBuffer here too ????????????
  3. draw initial environment:  --> using values to draw all cells on grid
  4. set pause to be true, stop iteration at beginning
  
@@ -135,49 +136,13 @@ void setup() {
 
   // ************************2.2 give each cell a random life and death value ************************
   randomizeCellsGrid();
-  //// loop through every cell in grid
-  //// x, y are index of cells, not index of pixels
-  //for (int x=0; x<width/cellSize; x++) {              
-  // for (int y=0; y<height/cellSize; y++) {           
-
-  //   // each cell has its own (x,y) and its own random number: state
-  //   float state = random (100);        
-
-  //   // if its state > probabilityOfAlive(15)  ---> meaning 
-  //   // ---> if among all cells, its probability of being chosen is above 15%
-  //   if (state > probabilityOfAliveAtStart) {         
-
-  //     // then this cell is declared death --> set it's value 0
-  //     state = 0;
-
-  //   } else {  // if its probability of being chosen is below or equal 15%                             
-  //     // then it is declared alive and set value = 1
-  //     state = 1;
-  //   }
-
-  //   // let's find a place for each cell and record their values inside cells[x][y]
-  //   cells[x][y] = int(state);
-
-  // }
-  //}
-
-  // draw black background only once, as later we are dealing with each cell's color 
-  // we don't need to draw background in every run/frame
-  //background(200);
+  
 
 
   // **************************  3. let's draw cell grids1 ************************** 
   drawCellsGrid(cellSize, cells);
-  //for (int x=0; x<width/cellSize; x++) {              
-  // for (int y=0; y<height/cellSize; y++) { 
-  //   if (cells[x][y] == 1) {
-  //     fill(alive);
-  //   } else {
-  //     fill(dead);
-  //   }
-  //   rect(x*cellSize, y*cellSize, cellSize, cellSize);
-  // }
-  //}
+
+
 
   // ****************** 4. set pause true to stop iteration to run automatically ****************************
   pause = !pause;
@@ -228,51 +193,13 @@ void draw() {
 
   // ****************************** step 1.5 toggle x to instantiate selectedSquare grid ******************************
   if (makeSelection) {
+    
     createSelectedSquareBasedOnCells();
     // ************ Important 1!!!!
     // without the following code, you have to press x again to stop creating new selectedSquare while
     // mouse is moving
     makeSelection = !makeSelection;
-    //int xCellOver = int(map(mouseX, 0, width, 0, width/cellSize));
 
-    // // constrain mouseX or xCellOver only hover the first half cols of cells grid, 
-    // // also it cannot hover on the last col of first half
-    // xCellOver = constrain(xCellOver, 0, width/cellSize/2-1);         
-
-    // // mouseY or yCellOver can hover over any cell of cells grid, but not on pixels
-    // int yCellOver = int(map(mouseY, 0, height, 0, height/cellSize));
-
-    // // constrain yCellOver/mouseY only hover on first half of rows of cells grid
-    // yCellOver = constrain(yCellOver, 0, height/cellSize/2-1);  
-
-    // // *********** from (mouseX, mouseY) right 60, down 60, is selectedSquare grid
-    // for (int xCell=xCellOver; xCell<xCellOver+60; xCell++) {
-    //   for (int yCell=yCellOver; yCell<yCellOver+60; yCell++) {
-
-    //     // ***********as xCellOver is fixed by mouseX, xCell-xCellOver = 0 to 60*************
-
-    //     // *********** transfer values of cells grid to them
-    //     selectedSquare[xCell-xCellOver][yCell-yCellOver] = cellsBuffer[xCell][yCell];
-    //     selectedSquareBuffer[xCell-xCellOver][yCell-yCellOver] = cellsBuffer[xCell][yCell];
-    //   }
-    // }
-    // //}
-    // //}
-
-    // // ******* debug see above code of assigning working or not
-    // println("target1: " + selectedSquare[0][0]);
-    // println("mouse1: " + cellsBuffer[xCellOver][yCellOver]);
-    // println("target2: " + selectedSquare[0][1]);
-    // println("mouse2: " + cellsBuffer[xCellOver][yCellOver+1]);
-    // println("target3: " + selectedSquare[0][2]);
-    // println("mouse3: " + cellsBuffer[xCellOver][yCellOver+2]);
-
-    // // enlargeSize = cellSize*2;
-    // //enlarge = !enlarge;
-
-    // // ********* let saveLocationX and Y to remember the selected (mouseX, mouseY) or (xCellOver,yCellOver) 
-    // saveLocationX = xCellOver;
-    // saveLocationY = yCellOver;
   }
 
 
@@ -283,23 +210,7 @@ void draw() {
 
     drawCellsGrid(enlargeSize, selectedSquare);
 
-    //for (int x=0; x<width/enlargeSize; x++) {
-    //  for (int y=0; y<height/enlargeSize; y++) {
-    //    stroke(34);
-    //    // if any cell's value is 1, give it color alive
-    //    if (selectedSquare[x][y]==1) {                 
-    //      fill(alive);
-    //    } else { 
-    //      // if this cell's value is not 1, give it color dead
-    //      fill(dead);
-    //    }
 
-    //    rect(x*enlargeSize, y*enlargeSize, enlargeSize, enlargeSize);  
-
-    //  }
-    // }
-
-    // println("drawing selectedSquare grid");
 
     // ************************** step 3: if enlarge toggled false, draw cells grid **************************
 
@@ -316,6 +227,8 @@ void draw() {
 
       // println("referenceLocation is true for updating cells grid");
 
+
+      // once referenceLocation toggled true, insert selectedSquare back to cells' appropriate place
       for (int x=0; x<width/enlargeSize; x++) {
         for (int y=0; y<height/enlargeSize; y++) {
           cells[saveLocationX+x][saveLocationY+y] = selectedSquare[x][y];
@@ -328,27 +241,8 @@ void draw() {
     }
 
     drawCellsGrid(cellSize, cells);
-    // loop through every cell in grid, each cell is a 5x5 pixels
-    //for (int x=0; x<width/cellSize; x++) {
-    //  for (int y=0; y<height/cellSize; y++) {
-
-    //    stroke(34);
-    //    // if any cell's value is 1, give it color alive
-    //    if (cells[x][y]==1) {                 
-    //      fill(alive);
-    //    } else { 
-    //      // if this cell's value is not 1, give it color dead
-    //      fill(dead);
-    //    }
-
-    //    // ************  given their colors above, draw each cell with a rect 
-    //    // x*cellSize = rect.x in pixel; y*cellSize = rect.y in pixel 
-    //    // (rect.x, rect.y) is origin point for rect
-    //    rect (x*cellSize, y*cellSize, cellSize, cellSize);  
-
-    //  }
-    //}
-
+  }
+    
     //// ******************** step4: select area by drawing square with mouse hovering *********************
 
     // ************** toggle 'select' true as one condition for selection 
@@ -359,25 +253,10 @@ void draw() {
 
         displaySelectedArea();
 
-        //      // make sure mouse hover/click to not pixel but cell with 5pixel on x-axis
-        //      int xCellOver = int(map(mouseX, 0, width, 0, width/cellSize));
-
-        //      // make sure the last column of cell will not be clicked/shown
-        //      xCellOver = constrain(xCellOver, 0, width/cellSize/2-1);         
-
-        //      // make sure mouse click refer not pixel but cell with 5 pixel on y-axis
-        //      int yCellOver = int(map(mouseY, 0, height, 0, height/cellSize));
-
-        //      // make sure the last row of cell will not be clicked/shown
-        //      yCellOver = constrain(yCellOver, 0, height/cellSize/2-1);  
-
-
-        //        stroke(200, 0, 150);
-        //        noFill();
-        //        rect(xCellOver*cellSize, yCellOver*cellSize, 60*cellSize, 60*cellSize);
+        
       }
     }
-  }
+  
 
 
 
@@ -390,69 +269,17 @@ void draw() {
     if (enlarge) {
 
       changeCellStatus(enlargeSize, selectedSquareBuffer, selectedSquare);
-      //// ************** define and constrain xCellOver, yCellOver with mouseX, mouseY in selectedSquare
-      //int xCellOver = int(map(mouseX, 0, width, 0, width/enlargeSize));
-
-      //// make sure the last column of cell will not be clicked/shown
-      //xCellOver = constrain(xCellOver, 0, width/enlargeSize-1);         
-
-      //// make sure mouse click refer not pixel but cell with 5 pixel on y-axis
-      //int yCellOver = int(map(mouseY, 0, height, 0, height/enlargeSize));
-
-      //// make sure the last row of cell will not be clicked/shown
-      //yCellOver = constrain(yCellOver, 0, height/enlargeSize-1);        
-
-      //// ************** click to change status of cells of selectedSquare 
-      //// when mouse licked, it is cell being clicked
-      //// xCellOver, yCellOver --> cell.index.x and cell.index.y
-      //// for the cell being clicked, if its buffer copy value = 1 alive, then set its value in cells dead
-      ////if (selectedSquare[xCellOver][yCellOver] == selectedSquareBuffer[xCellOver][yCellOver]) {
-      //if (selectedSquareBuffer[xCellOver][yCellOver]==1) { 
-      //  selectedSquare[xCellOver][yCellOver]=0; // buffer copy is done when pause the iteration
-      //  fill(dead); // Fill with kill color
-      //} else { // if its buffer copy value is not 1, then set its cells' value as 1
-      //  selectedSquare[xCellOver][yCellOver]=1; 
-      //  fill(alive); // Fill alive color
-      //}
-
-      //println("enlarge is ", enlarge, " for change cell status for selectedSquare");
+      
 
 
 
-
-      // ************** define and constrain xCellOver, yCellOver with mouseX, mouseY in cells grid
+      // ************** if enlarge false, mouse hover and click cell of cells grid to change status  *****
     } else {
-      // ******** how to make mouse click on cell not on pixel ********
-      // ******** now click to change death and life status of cells' cell **********
-      // ******** then above drawing code will draw the updated cells grid *********
-      // make sure mouse hover/click to not pixel but cell with 5pixel on x-axis
+      
 
       changeCellStatus(cellSize, cellsBuffer, cells);
-
-      //int xCellOver = int(map(mouseX, 0, width, 0, width/cellSize));
-
-      //// make sure the last column of cell will not be clicked/shown
-      //xCellOver = constrain(xCellOver, 0, width/cellSize-1);         
-
-      //// make sure mouse click refer not pixel but cell with 5 pixel on y-axis
-      //int yCellOver = int(map(mouseY, 0, height, 0, height/cellSize));
-
-      //// make sure the last row of cell will not be clicked/shown
-      //yCellOver = constrain(yCellOver, 0, height/cellSize-1);        
-
-      //// ********* click to change status of cell in cells **********
-      //// when mouse licked, it is cell being clicked
-      //// xCellOver, yCellOver --> cell.index.x and cell.index.y
-      //// for the cell being clicked, if its buffer copy value = 1 alive, then set its value in cells dead
-      //if (cellsBuffer[xCellOver][yCellOver]==1) { 
-      //  cells[xCellOver][yCellOver]=0; // buffer copy is done when pause the iteration
-      //  fill(dead); // Fill with kill color
-      //} else { // if its buffer copy value is not 1, then set its cells' value as 1
-      //  cells[xCellOver][yCellOver]=1; 
-      //  fill(alive); // Fill alive color
-      //}
-
-      //println("enlarge is ", enlarge, " for changing cell status in cells grid");
+      
+      
     }
   }
 
@@ -464,17 +291,8 @@ void draw() {
     //else if (pause) {
     // Save cells to buffer (so we opeate with one array keeping the other intact)
     updateBuffersWithGrids();
-    //for (int x=0; x<width/cellSize; x++) {
-    //  for (int y=0; y<height/cellSize; y++) {
-    //    cellsBuffer[x][y] = cells[x][y];      // copy cells exact to cellsBuffer
-    //  }
-    //}
-
-    //for (int x=0; x<width/enlargeSize-1; x++) {
-    //  for (int y=0; y<height/enlargeSize-1; y++) {
-    //    selectedSquareBuffer[x][y] = selectedSquare[x][y];
-    //  }
-    //}
+    
+    
   }
 }
 
@@ -530,13 +348,8 @@ void keyPressed() {
   // after insertion, cells grid can be drew 
   if (key == 's' || key == 'S') {
     referenceLocation = !referenceLocation;
-    //println("at toggle: referenceLocation is ", referenceLocation);
-
-    //for (int x=0; x<width/enlargeSize; x++) {
-    //  for (int y=0; y<height/enlargeSize; y++) {
-    //     cells[saveLocationX+x][saveLocationY+y] = selectedSquare[x][y];
-    //  }
-    //}
+    
+    
   } 
 
 
@@ -569,19 +382,8 @@ void keyPressed() {
     // Restart: reinitialization of cells
 
     randomizeCellsGrid();
-    //for (int x=0; x<width/cellSize; x++) {
-    //  for (int y=0; y<height/cellSize; y++) {
-
-    //    // randomize the life and death of each cell
-    //    float state = random (100);
-    //    if (state > probabilityOfAliveAtStart) {
-    //      state = 0;
-    //    } else {
-    //      state = 1;
-    //    }
-    //    cells[x][y] = int(state); // Save state of each cell
-    //  }
-    //}
+    
+    
   }
 
   // ************************ use space to toggle pause ************************

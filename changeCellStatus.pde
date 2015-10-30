@@ -3,6 +3,8 @@ void changeCellStatus(int enlargeSize, int[][] selectedSquareBuffer, int[][] sel
 
 
       // ************** define and constrain xCellOver, yCellOver with mouseX, mouseY in selectedSquare
+      
+      // make sure mouse hover on enlarged cells not on pixels
       int xCellOver = int(map(mouseX, 0, width, 0, width/enlargeSize));
   
       // make sure the last column of cell will not be clicked/shown
