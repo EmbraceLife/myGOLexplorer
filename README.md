@@ -1,6 +1,6 @@
 # myGOLexplorer
 
-my version is built upon [thi demo](https://processing.org/examples/gameoflife.html) created by Joan Soler-Adillon. 
+my version is built upon [a processing demo](https://processing.org/examples/gameoflife.html) created by Joan Soler-Adillon. 
 
 
 1. spacebar: to iterate or pause
