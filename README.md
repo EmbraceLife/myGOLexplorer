@@ -1,5 +1,8 @@
 # myGOLexplorer
 
+my version is built upon [thi demo](https://processing.org/examples/gameoflife.html) created by Joan Soler-Adillon. 
+
+
 1. spacebar: to iterate or pause
 2. r : to reset randomize environment for grid
 3. c : to clean up grid
