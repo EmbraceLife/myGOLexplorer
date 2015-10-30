@@ -30,6 +30,11 @@
 // 7. there must be many toggle buttons: pause, enlarge, referenceLocation, makeSelection, iterateStepy
 
 
+    
+    
+
+
+
 
 //****************** 1. cellSize and enlargeSize 
 // Size of cells = 5 pixels X 5 pixel = Is it right            ????
@@ -38,6 +43,12 @@ int cellSize = 5;
 int enlargeSize = cellSize * 2;
 
 
+// *************** 2. start and end points of creatureGrid
+int startX = 1;
+int startY = 1;
+int endX = 2;
+int endY = 2;
+int xCellOver, yCellOver;
 
 //****************** 3. saveLocationX, saveLocationY
 // when select an area, we need to remember/buffer the mouse Over location for cells
@@ -78,6 +89,9 @@ int[][] selectedSquare;
 int[][] cellsBuffer; 
 int[][] selectedSquareBuffer;
 
+//// 3. creatureGrid for selected creature square; creatureString for turning grid into string array
+int[][] creatureGrid;
+String[] creatureString;
 
 
 // ******************7. building toggles
@@ -87,8 +101,10 @@ boolean enlarge = false;
 boolean referenceLocation = false;  // key location to be remembered
 boolean makeSelection = false; // key button to instantiate selectedSquare from cells
 boolean iterateStepy = false; // key to allow iteration steps
-
-
+boolean captureMode = false; // press p to toggle captureMode
+boolean recordEndPoint = false; // press w to toggle
+boolean recordStartPoint = false; // press q to toggle
+boolean debugStartEnd = false; // press d to debug by println
 // ***********************************************************************************************
 // ***************************  what you want in setup()  ***********************************************
 // ************************************************************************************************************
@@ -184,7 +200,7 @@ void draw() {
       iteration();                        // do iteration
       lastRecordedTime = millis();             // mark this moment as lastRecordedTime (for iteration)
     } else if (iterateStepy) {
-      println(iterateStepy);
+      // println(iterateStepy);
       iteration(); 
       iterateStepy = !iterateStepy;
     }
@@ -295,6 +311,23 @@ void draw() {
     
     
   }
+  
+  
+  // ************ ************ step 7: capturing creatures ************ ************ ************ 
+  // capture and save creature String into txt
+
+    
+    captureCreatures();
+    
+    if (debugStartEnd) {
+      println("startX:", startX, "; startY:", startY, "; endX:", endX, "; endY:", endY);
+      
+      for (int i = 0; i < creatureString.length-1; i++) {
+        println("value ", i, ":", creatureString[i]);
+      }
+      debugStartEnd = !debugStartEnd;
+    }
+  
 }
 
 
@@ -316,7 +349,38 @@ void draw() {
  */
 
 void keyPressed() {
+  
 
+  
+  
+  
+ if (pause) {
+   
+   if (key == 'w' || key == 'W') {
+     recordEndPoint = !recordEndPoint;
+   }
+   
+   if (key == 'q' || key == 'Q') {
+     recordStartPoint = !recordStartPoint;
+   }
+   
+   if (key == 'd' || key == 'D') {
+     debugStartEnd = !debugStartEnd;
+   }
+ }
+
+ // *************** press p to toggle captureMode
+ if (pause) {
+   
+   if (key == 'p' || key == 'P') {
+     
+     captureMode = !captureMode;
+     
+   }
+ }
+  
+  
+ // *************** press n to iterate step by step ********************* 
  if (pause) {
 
    if (key == 'n' || key == 'N') {
@@ -325,7 +389,7 @@ void keyPressed() {
         
        iterateStepy = !iterateStepy;
        
-       println("iterateStepy is set ", iterateStepy);
+       //println("iterateStepy is set ", iterateStepy);
      
    }
  }
