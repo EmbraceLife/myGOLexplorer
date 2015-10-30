@@ -323,6 +323,8 @@ void draw() {
       println("startX:", startX, "; startY:", startY, "; endX:", endX, "; endY:", endY);
       
       for (int i = 0; i < creatureString.length-1; i++) {
+        
+        // ******** there are 0s and 1s and a lot of Nulls ************* why ??????????
         println("value ", i, ":", creatureString[i]);
       }
       debugStartEnd = !debugStartEnd;

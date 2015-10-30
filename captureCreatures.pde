@@ -119,7 +119,10 @@ void captureCreatures() {
     creatureString = new String[(endX-startX+1)*(endY-startY+1)];
     for (int i = startX; i < (endX+1); i++) {
       for (int j = startY; j < (endY+1); j++) {
-        println(cells[i][j]);
+        // ***********  here everything seems fine *************
+        println(cells[i][j]); 
+        
+        // something wrong here ************************ ??????????????????????
         creatureString[(i-startX)*(j-startY+1)+(j-startY)] = cells[i][j] + "";
         
       }
