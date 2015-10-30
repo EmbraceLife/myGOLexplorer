@@ -1,2 +1,4 @@
 # ignore photos, data, and apps
 assets/
+application.macosx/
+
