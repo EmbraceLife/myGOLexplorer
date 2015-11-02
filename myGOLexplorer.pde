@@ -206,89 +206,31 @@ void draw() {
   // draw a mouse-moving-selecting red square upon it 
   displaySelectedArea();
 
-  // ***************** press x to record red squre on cells grid ******************************  
+ 
   // press x to record the selected square
-  // press z to zoom the selected to full canvas (drawing the selected to full canvas)
-    
-    createSelectedSquareBasedOnCells();
+  // press z to zoom the selected to full canvas (drawing the selected to full canvas)  
+  createSelectedSquareBasedOnCells();
 
 
-  // ************* step 2: if enlarge toggled true, draw selectedSquare grid ************* 
-  if (enlarge) {
-
-
-
-    drawCellsGrid(enlargeSize, selectedSquare);
-
-
-
-    // ************************** step 3: if enlarge toggled false, draw cells grid **************************
-
-    // ************** here cells are drew with update from iteration
-    // ************** pause true only stops iteration not drawing grids
-  } else {
-
-    // ******************* important Note: first press s to insert changed selectedSquare into cells grid
-    // ***************** and second press s is to toggle referenceLocation false to 
-    // ***************** prevent repeatedly insert the same selectedSquare back to cells grid after continue iteration
-    if (referenceLocation) {
-
-
-
-      // println("referenceLocation is true for updating cells grid");
-
-
-      // once referenceLocation toggled true, insert selectedSquare back to cells' appropriate place
-      for (int x=0; x<(width-1)/enlargeSize; x++) {
-        for (int y=0; y<(height-1)/enlargeSize; y++) {
-          cells[saveLocationX+x][saveLocationY+y] = selectedSquare[x][y];
-        }
-      }
-      
-      // **********Important ******** this code is key to make any press of 's' only has one-time effect
-      referenceLocation = !referenceLocation;
-      //println("now update cells grid");
-    }
-
-    //if (releaseCreatureMode) {
-      
-      
-    //  // reverse releaseCreatureMode
-    //  releaseCreatureMode = !releaseCreatureMode; 
-    //}
-
-
-    //drawCellsGrid(cellSize, cells);
-  }
-    
-    //// ******************** step4: mouse with red square for selecting *********************
-    // press z to display rect
-    // must below drawGrid function to be on top of it
-    //displaySelectedArea();
-
+  // press s to insert changed selected square back to cells
+  // press e to toggle enlarge mode false, go back to draw cells grid
+  insertSelectedSquareBackToCells();
    
 
 
-  // ************** step 5: if pause and mousePress true, to change cell status  ***************
-  // 1. if enlarge toggle true, change cell status of selectedSquare grid
-  // 2. if enlarge toggle false, change cell status of cells grid
-  // through mouse click, cells grid's value is updated
+  // ************** step 5: click to change cell status *********************
 
   if (pause && mousePressed) {  
+    
+    // under enlarge mode, click to change cell status in selectedSquare
     if (enlarge) {
 
       changeCellStatus(enlargeSize, selectedSquareBuffer, selectedSquare);
-      
 
-
-
-      // ************** if enlarge false, mouse hover and click cell of cells grid to change status  *****
+      // if not, change for cell status in cells grid
     } else {
-      
-
       changeCellStatus(cellSize, cellsBuffer, cells);
-      
-      
+  
     }
   }
 

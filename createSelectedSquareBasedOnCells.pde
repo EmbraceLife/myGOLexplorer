@@ -18,39 +18,32 @@ void createSelectedSquareBasedOnCells() {
   yCellOver = constrain(yCellOver, 0, (height-1)/cellSize/2);  
 
   
+  
   if (makeSelection) {  
-     
+    
+    // press x to remember the start point of selection square
     xZoom = xCellOver;
     yZoom = yCellOver;
+     
+    // record the selected square only once for all frame loops later
+    for (int xCell=xZoom; xCell<xZoom+60; xCell++) {
+      for (int yCell=yZoom; yCell<yZoom+60; yCell++) {
+        
+        // ***********as xCellOver is fixed by mouseX, xCell-xCellOver = 0 to 60*************
+        
+        // *********** transfer values of cells grid to them
+        selectedSquare[xCell-xZoom][yCell-yZoom] = cellsBuffer[xCell][yCell];
+        selectedSquareBuffer[xCell-xZoom][yCell-yZoom] = cellsBuffer[xCell][yCell];
+      }
+  }
+    
     makeSelection = !makeSelection;
+
   }
   
+  // press e to draw the selected square on full canvas
   if (enlarge) {
       
-      // *********** from (mouseX, mouseY) right 60, down 60, is selectedSquare grid
-      for (int xCell=xZoom; xCell<xZoom+60; xCell++) {
-        for (int yCell=yZoom; yCell<yZoom+60; yCell++) {
-          
-          // ***********as xCellOver is fixed by mouseX, xCell-xCellOver = 0 to 60*************
-          
-          // *********** transfer values of cells grid to them
-          selectedSquare[xCell-xZoom][yCell-yZoom] = cellsBuffer[xCell][yCell];
-          selectedSquareBuffer[xCell-xZoom][yCell-yZoom] = cellsBuffer[xCell][yCell];
-        }
-      }
-      //}
-      //}
-
-      // ******* debug see above code of assigning working or not
-      //println("target1: " + selectedSquare[0][0]);
-      //println("mouse1: " + cellsBuffer[xCellOver][yCellOver]);
-      //println("target2: " + selectedSquare[0][1]);
-      //println("mouse2: " + cellsBuffer[xCellOver][yCellOver+1]);
-      //println("target3: " + selectedSquare[0][2]);
-      //println("mouse3: " + cellsBuffer[xCellOver][yCellOver+2]);
-
-      // enlargeSize = cellSize*2;
-      //enlarge = !enlarge;
 
       // ********* let saveLocationX and Y to remember the selected (mouseX, mouseY) or (xCellOver,yCellOver) 
       saveLocationX = xZoom;
