@@ -104,7 +104,8 @@ boolean iterateStepy = false; // key to allow iteration steps
 boolean captureMode = false; // press p to toggle captureMode
 boolean recordEndPoint = false; // press w to toggle
 boolean recordStartPoint = false; // press q to toggle
-boolean debugStartEnd = false; // press d to debug by println
+//boolean debugStartEnd = false; // press d to debug by println
+boolean releaseCreatureMode = false; // press m to toggle releaseCreatureMode
 // ***********************************************************************************************
 // ***************************  what you want in setup()  ***********************************************
 // ************************************************************************************************************
@@ -257,6 +258,14 @@ void draw() {
       //println("now update cells grid");
     }
 
+    //if (releaseCreatureMode) {
+      
+      
+    //  // reverse releaseCreatureMode
+    //  releaseCreatureMode = !releaseCreatureMode; 
+    //}
+
+
     drawCellsGrid(cellSize, cells);
   }
     
@@ -319,16 +328,16 @@ void draw() {
     
     captureCreatures();
     
-    if (debugStartEnd) {
-      println("startX:", startX, "; startY:", startY, "; endX:", endX, "; endY:", endY);
+    //if (debugStartEnd) {
+    //  println("startX:", startX, "; startY:", startY, "; endX:", endX, "; endY:", endY);
       
-      for (int i = 0; i < creatureString.length-1; i++) {
+    //  for (int i = 0; i < creatureString.length-1; i++) {
         
-        // ******** there are 0s and 1s and a lot of Nulls ************* why ??????????
-        println("value ", i, ":", creatureString[i]);
-      }
-      debugStartEnd = !debugStartEnd;
-    }
+    //    // ******** there are 0s and 1s and a lot of Nulls ************* why ??????????
+    //    println("value ", i, ":", creatureString[i]);
+    //  }
+    //  debugStartEnd = !debugStartEnd;
+    //}
   
 }
 
@@ -353,6 +362,7 @@ void draw() {
 void keyPressed() {
   
 
+    
   
   
   
@@ -366,9 +376,13 @@ void keyPressed() {
      recordStartPoint = !recordStartPoint;
    }
    
-   if (key == 'd' || key == 'D') {
-     debugStartEnd = !debugStartEnd;
-   }
+   //if (key == 'd' || key == 'D') {
+   //  debugStartEnd = !debugStartEnd;
+   //}
+   
+   if (key == 'm' || key == 'M') {
+    releaseCreatureMode = !releaseCreatureMode;
+    }
  }
 
  // *************** press p to toggle captureMode

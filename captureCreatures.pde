@@ -86,22 +86,34 @@ void captureCreatures() {
   
   // ******************************** 3. initialize creatureGrid ***************** 
   // e.g. from cell.x1 to cell.x10, the square takes 10 cells on x-axis --> 10-1+1
-    creatureGrid = new int[endX-startX+1][endY-startY+1]; 
+    //creatureGrid = new int[endX-startX+1][endY-startY+1]; 
   
   
   
   // ******************************** 4. save cell values and save to creatureGrid ***************** 
   // 4.1 extrieve cell values from cells grid
+  Table creatureTable = new Table();
     for (int i = startX; i < endX+1; i++) {
+      
+      creatureTable.addColumn((i-startX)+"", Table.INT);
       for (int j = startY; j < endY+1; j++) {
-        //println(cells[i][j]);
-        // [i-startX] --> index0 to index(endX-startX) note: it is not index(endX-startX+1)
-        creatureGrid[i-startX][j-startY] = cells[i][j];
+        
+         
+
+         creatureTable.setInt((j-startY), (i-startX), cells[i][j]);
         // *********** we do not remember saveLocation to bring creatureGrid back to cells **********
+               //table.setInt((i-startX), (j-startY), creatureGrid[i-startX][j-startY]);
       }
     }
     
+    int s = second();  
+    int m = minute();  
+    int h = hour(); 
+    saveTable(creatureTable, "assets/data/simpleCreature1.csv");
+  captureMode = !captureMode;
   
+  }
+}
   
   // ************* 5. save creatureGrid values into creatureString ***************
   // ignore the absolute value of startX, startY, endX, endY; 
@@ -116,28 +128,26 @@ void captureCreatures() {
   // int[] creatureString
   
   // ********** PROBLEM IS HERE ********************
-    creatureString = new String[(endX-startX+1)*(endY-startY+1)];
-    for (int i = startX; i < (endX+1); i++) {
-      for (int j = startY; j < (endY+1); j++) {
-        // ***********  here everything seems fine *************
-        println(cells[i][j]); 
+    //creatureString = new String[(endX-startX+1)*(endY-startY+1)];
+    //for (int i = startX; i < (endX+1); i++) {
+    //  for (int j = startY; j < (endY+1); j++) {
+    //    // ***********  here everything seems fine *************
+    //    println(cells[i][j]); 
         
-        // something wrong here ************************ ??????????????????????
-        creatureString[(i-startX)*(j-startY+1)+(j-startY)] = cells[i][j] + "";
+    //    // something wrong here ************************ ??????????????????????
+    //    creatureString[(i-startX)*(j-startY+1)+(j-startY)] = cells[i][j] + "";
         
-      }
-    }
+    //  }
+    //}
   
-  //  ******************* 6. save creatureString into .txt *******************
+  ////  ******************* 6. save creatureString into .txt *******************
   
-    int s = second();  
-    int m = minute();  
+    //int s = second();  
+    //int m = minute();  
     //int h = hour(); 
     
-    saveStrings("assets/data/creature"+m+"-"+s+".txt", creatureString);
+    //saveStrings("assets/data/creature"+m+"-"+s+".txt", creatureString);
     
-    captureMode = !captureMode;
+    //captureMode = !captureMode;
    
    
-  }
-}
