@@ -70,16 +70,16 @@ void captureCreatures() {
          
          rect(startX*cellSize, startY*cellSize, (xCellOver-startX+1)*cellSize, (yCellOver-startY+1)*cellSize);
       }
-  
+ }
       // toggle recordEndPoint with 'w' to record endX, endY point
       // ***** then automatically captureMode is toggled false to lock starting point ********
-      if (recordEndPoint) {
-        endX = xCellOver;
-        endY = yCellOver;
-        recordEndPoint = !recordEndPoint;
-      }
-   
- }
+  if (recordEndPoint && pause) {
+    endX = xCellOver;
+    endY = yCellOver;
+    recordEndPoint = !recordEndPoint;
+  }
+ 
+ 
 
 
   if (captureMode) {
@@ -106,10 +106,10 @@ void captureCreatures() {
       }
     }
     
-    int s = second();  
-    int m = minute();  
-    int h = hour(); 
-    saveTable(creatureTable, "assets/data/simpleCreature1.csv");
+    //int s = second();  
+    //int m = minute();  
+    //int h = hour(); 
+    saveTable(creatureTable, "data/simpleCreature1.csv");
   captureMode = !captureMode;
   
   }

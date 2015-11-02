@@ -36,11 +36,23 @@
 
 
 
+Table creature1;
+
+int R = 0;
+int C = 0;
+int[][] creatureGrid1 = new int[C][R];
+
+
+
 //****************** 1. cellSize and enlargeSize 
 // Size of cells = 5 pixels X 5 pixel = Is it right            ????
 int cellSize = 5;
 // size for enlarged selected areas
 int enlargeSize = cellSize * 2;
+
+
+
+
 
 
 // *************** 2. start and end points of creatureGrid
@@ -106,6 +118,7 @@ boolean recordEndPoint = false; // press w to toggle
 boolean recordStartPoint = false; // press q to toggle
 //boolean debugStartEnd = false; // press d to debug by println
 boolean releaseCreatureMode = false; // press m to toggle releaseCreatureMode
+boolean loadCreatureMode = false; // press l to toggle loadCreatureMode
 // ***********************************************************************************************
 // ***************************  what you want in setup()  ***********************************************
 // ************************************************************************************************************
@@ -322,7 +335,7 @@ void draw() {
   }
   
   
-  // ************ ************ step 7: capturing creatures ************ ************ ************ 
+  // ************ ************ step 7: capturing and display creatures ************ ************ ************ 
   // capture and save creature String into txt
 
     
@@ -338,6 +351,8 @@ void draw() {
     //  }
     //  debugStartEnd = !debugStartEnd;
     //}
+    
+    releaseCreature();
   
 }
 
@@ -383,6 +398,10 @@ void keyPressed() {
    if (key == 'm' || key == 'M') {
     releaseCreatureMode = !releaseCreatureMode;
     }
+    
+   if (key == 'l' || key == 'L') {
+     loadCreatureMode = !loadCreatureMode;
+   }
  }
 
  // *************** press p to toggle captureMode
