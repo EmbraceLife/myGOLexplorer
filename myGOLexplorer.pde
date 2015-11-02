@@ -50,7 +50,8 @@ int cellSize = 5;
 // size for enlarged selected areas
 int enlargeSize = cellSize * 2;
 
-
+int xZoom = 0;
+int yZoom = 0;
 
 
 
@@ -138,44 +139,32 @@ boolean loadCreatureMode = false; // press l to toggle loadCreatureMode
 
 void setup() {
 
-  // ****************** 1. create canvas
-  // create canvas 600x600 pixels
-  // create canvas 601x601 pixels to give more space for edges
-
+  // setup Canvas, cells grid, and selectedSquare grid
   size (601, 601);                            
 
-
-  // setupGrids();
-
-
-  // ****************** 2.1 Instantiate cells and cellsBuffer grids
-  // create a grid with specified number of cols and rows
-  // columns = width/cellSize; rows = height/cellSize; size of cell = 5pixel x 5pixel
-
   cells = new int[(width-1)/cellSize][(height-1)/cellSize];        
-
-  // Instantiate cells buffer: just cope cells content
-
   cellsBuffer = new int[(width-1)/cellSize][(height-1)/cellSize];
+  //cellsBuffer = cells;   <-- This is problematic!!!
 
 
   selectedSquare = new int[(width-1)/cellSize/2][(height-1)/cellSize/2];
   selectedSquareBuffer = new int[(width-1)/cellSize/2][(height-1)/cellSize/2];
-  // don't hide edges/ jaggs
+  
+  
   noSmooth();                                 
 
 
-  // ************************2.2 give each cell a random life and death value ************************
+  // *****************2.2 give each cell a random life and death value ************************
   randomizeCellsGrid();
   
 
 
-  // **************************  3. let's draw cell grids1 ************************** 
+  // *****************  3. let's draw cell grids1 ************************** 
   drawCellsGrid(cellSize, cells);
 
 
 
-  // ****************** 4. set pause true to stop iteration to run automatically ****************************
+  // ****************** 4. pause iteration ****************************
   pause = !pause;
 }
 
@@ -204,37 +193,27 @@ void setup() {
 void draw() {
 
 
-  // ************************ step 1: iterate with a speed (when pause false) ************************
-  // if pause toggle true, iteration won't run
-  // if pause toggle false, iterate only update values of cells not drawing
-
-  // Iterate if timer ticks                    run iteration function every 100mills 
-  if (millis()-lastRecordedTime>interval) {          // if 100 mills passed since lastRecordedTime,
-    if (!pause) {                         // if user didn't pause it
-      iteration();                        // do iteration
-      lastRecordedTime = millis();             // mark this moment as lastRecordedTime (for iteration)
-    } else if (iterateStepy) {
-      // println(iterateStepy);
-      iteration(); 
-      iterateStepy = !iterateStepy;
-    }
-    
-  }
+  // ************************ auto-iterate frequency, or iterate by hand ************************
+  //global parameter: interval, pause, iterateStepy
+  iterateFrequency();
+ 
 
 
-  // ****************************** step 1.5 toggle x to instantiate selectedSquare grid ******************************
-  if (makeSelection) {
+  // let's draw the grid
+  drawCellsGrid(cellSize, cells);
+
+
+  // draw a mouse-moving-selecting red square upon it 
+  displaySelectedArea();
+
+  // ***************** press x to record red squre on cells grid ******************************  
+  // press x to record the selected square
+  // press z to zoom the selected to full canvas (drawing the selected to full canvas)
     
     createSelectedSquareBasedOnCells();
-    // ************ Important 1!!!!
-    // without the following code, you have to press x again to stop creating new selectedSquare while
-    // mouse is moving
-    makeSelection = !makeSelection;
-
-  }
 
 
-  // ************************** step 2: if enlarge toggled true, draw selectedSquare grid ************* 
+  // ************* step 2: if enlarge toggled true, draw selectedSquare grid ************* 
   if (enlarge) {
 
 
@@ -279,24 +258,15 @@ void draw() {
     //}
 
 
-    drawCellsGrid(cellSize, cells);
+    //drawCellsGrid(cellSize, cells);
   }
     
-    //// ******************** step4: select area by drawing square with mouse hovering *********************
+    //// ******************** step4: mouse with red square for selecting *********************
+    // press z to display rect
+    // must below drawGrid function to be on top of it
+    //displaySelectedArea();
 
-    // ************** toggle 'select' true as one condition for selection 
-    // ************** given both pause and select being true, begin drawing rect
-
-    if (keyPressed == true && pause) {
-      if (key == 'z' || key == 'Z') {
-
-        displaySelectedArea();
-
-        
-      }
-    }
-  
-
+   
 
 
   // ************** step 5: if pause and mousePress true, to change cell status  ***************
