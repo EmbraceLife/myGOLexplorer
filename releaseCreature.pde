@@ -3,29 +3,22 @@
 
 void releaseCreature() {
   
-  //Table creature1;
-  
-  //int R = 0;
-  //int C = 0;
-  //int[][] creatureGrid1 = new int[R][C];
-  
+
+  // load csv creature into a table
   if (pause && loadCreatureMode) {
-    // load creature1 from csv to a small grid starting at (0,0)
-    creature1 = loadTable("simpleCreature1.csv", "header");
+    Table creature1 = loadTable("simpleCreature1.csv", "header");
   
+    // total Rows and Cols creature grid takes
     R = creature1.getRowCount();  // it is really just num of cells on y-axis
     C = creature1.getColumnCount(); // it is really just num of cells on x-axis
-    println(R, C);
-    //creatureGrid1 = new int[R][C];
+    creatureGrid1 = new int[C][R]; // ***make sure to define the length of int[][] here not at beginning
     
     
-    //println(R + " total rows in table"); 
-    //noLoop();
+    // create creatureGrid from table
     for (int i=0; i<C; i++) {
       for (int j=0; j<R; j++) {
-        int num = creature1.getInt(j, i);
-        //println("row"+i+"col"+j, ":", num);
-        creatureGrid1[i][j] = num;
+        int num = creature1.getInt(j, i); // table.getInt(row, col);
+        creatureGrid1[i][j] = num; // grid[x][y] --> grid[col][row]
       }
     }
     
@@ -41,23 +34,26 @@ void releaseCreature() {
 
   int yCellOver = int(map(mouseY, 0, height, 0, (height-1)/cellSize));
   
-  println(xCellOver, yCellOver);
-  //noLoop();
-  
+
+  // press v to choose a position to release creature
    if (keyPressed == true && pause) {
    
     if (key == 'v' || key == 'V') {
       noFill();
       stroke(0,0,255);
       rect(xCellOver*cellSize, yCellOver*cellSize, C*cellSize, R*cellSize);
+      println("releaseCreatureAt:", xCellOver, yCellOver);
     }
    }
 
-  // insert createGrid1 into cells grid at the cell where mouse clicks, the grid will be drew by other func
+  // press m to insert creature in grid into cells grid of canvas
   if (pause && releaseCreatureMode) {
     for (int i = xCellOver; i < xCellOver+C; i++) {
       for (int j = yCellOver; j < yCellOver+R; j++) {
-        cells[i][j] = creatureGrid1[j-yCellOver][i-xCellOver];
+        
+        i = constrain(i, 0, width-1-C);
+        j = constrain(j, 0, height-1-R);
+        cells[i][j] = creatureGrid1[i-xCellOver][j-yCellOver]; // careful of [][] inside order
       }
     }
     releaseCreatureMode = !releaseCreatureMode;

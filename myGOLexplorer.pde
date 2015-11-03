@@ -36,11 +36,11 @@
 
 
 
-Table creature1;
+//Table creature1;
 
 int R = 0;
 int C = 0;
-int[][] creatureGrid1 = new int[C][R];
+int[][] creatureGrid1; 
 
 
 
