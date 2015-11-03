@@ -2,15 +2,19 @@
 
 my version is built upon [a processing demo](https://processing.org/examples/gameoflife.html) created by Joan Soler-Adillon. 
 
+**Note**: master branch is obsolete, and the latest branch is most updated version.
 
 1. spacebar: to iterate or pause
 2. r : to reset randomize environment for grid
 3. c : to clean up grid
-4. z : display red square to show selecting area and using mouse to move it
-5. x : select the selected area
-6. e : switch to zoom in feature for the selected area 
-7. click mouse to change cell's status (alive or dead)
-8. s : save this new grid and insert it back into the previous larger grid 
-9. e : switch back to normal view 
-10. n : iterate step by step or spacebar to iterate repeatedly
-11. press 1, 2, 3: set iteration speed from every 10millis to 50millis to 100millis
+
+**New features developed below** -- 
+4. n : iterate step by step or spacebar to iterate repeatedly
+5. press 1, 2, 3: set iteration speed from every 10millis to 50millis to 100millis
+6. z : hold 'z', moving mouse, to select zooming area
+7. x, e: press x, then press z to zoom in
+8. click to change cell's death/life
+9. s, e: press s and then e, to save changes into previous grid
+10. q,a,w,p: in zoom mode, press q, hold a, move mouse to select, press w , to capture a creature, then p to save it
+11. l,v,m: press l to load creature, hold v move mouse to find a position, m to release creature
+
