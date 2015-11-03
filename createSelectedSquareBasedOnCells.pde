@@ -51,8 +51,14 @@ void createSelectedSquareBasedOnCells() {
       
       
       
-
+      // draw the selected square
       drawCellsGrid(enlargeSize, selectedSquare);
+      
+      
+      // console: zoom x y coordinates
+      int xCellOverZoom = int(map(mouseX, 0, width-1, 0, (width-1)/enlargeSize));
+      int yCellOverZoom = int(map(mouseY, 0, height-1, 0, (height-1)/enlargeSize));
+      println("zoom ", xCellOverZoom, ":", yCellOverZoom);
   
   
   }

@@ -37,9 +37,9 @@ void releaseCreature() {
   
   
   // display creatureBox and moving it with mouse
-  xCellOver = int(map(mouseX, 0, width, 0, (width-1)/cellSize));
+  int xCellOver = int(map(mouseX, 0, width, 0, (width-1)/cellSize));
 
-  yCellOver = int(map(mouseY, 0, height, 0, (height-1)/cellSize));
+  int yCellOver = int(map(mouseY, 0, height, 0, (height-1)/cellSize));
   
   println(xCellOver, yCellOver);
   //noLoop();

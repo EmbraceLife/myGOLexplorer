@@ -61,7 +61,7 @@ int startX = 1;
 int startY = 1;
 int endX = 2;
 int endY = 2;
-int xCellOver, yCellOver;
+//int xCellOver, yCellOver;
 
 //****************** 3. saveLocationX, saveLocationY
 // when select an area, we need to remember/buffer the mouse Over location for cells
@@ -202,32 +202,24 @@ void draw() {
   // let's draw the grid
   drawCellsGrid(cellSize, cells);
 
-
-  // draw a mouse-moving-selecting red square upon it 
+  // press 'z' to draw a mouse-moving-selecting red square upon it 
   displaySelectedArea();
 
  
   // press x to record the selected square
-  // press z to zoom the selected to full canvas (drawing the selected to full canvas)  
+  // press e to zoom the selected to full canvas (drawing the selected to full canvas)  
   createSelectedSquareBasedOnCells();
 
 
-  // press s to insert changed selected square back to cells
-  // press e to toggle enlarge mode false, go back to draw cells grid
-  insertSelectedSquareBackToCells();
-   
-
-
-  // ************** step 5: click to change cell status *********************
+  // *******mouse click to change cell status *********************
 
   if (pause && mousePressed) {  
     
     // under enlarge mode, click to change cell status in selectedSquare
     if (enlarge) {
-
       changeCellStatus(enlargeSize, selectedSquareBuffer, selectedSquare);
 
-      // if not, change for cell status in cells grid
+    // if not, change for cell status in cells grid
     } else {
       changeCellStatus(cellSize, cellsBuffer, cells);
   
@@ -235,16 +227,16 @@ void draw() {
   }
 
 
-  // **************************** step 6: pause toggle true, copy cells for cellsBuffer****************************
-  // ************************ pause only to cope cells to bufferCells ************************
-  // ************************ through pause, cells grid values are copied to bufferCells grid 
-  else if (pause && !mousePressed) { // if pause and not yet press mouse, copy current cells to buffer
-    //else if (pause) {
-    // Save cells to buffer (so we opeate with one array keeping the other intact)
-    updateBuffersWithGrids();
-    
-    
-  }
+  // press s to insert changed selected square back to cells
+  // press e to toggle enlarge mode false, go back to draw cells grid
+  insertSelectedSquareBackToCells();
+   
+   
+   
+  // while pause true and there is no mouseClick
+  // update cells and selectedSquares to cellsBuffer and selectedSquareBuffer
+  updateBuffersWithGrids();
+
   
   
   // ************ ************ step 7: capturing and display creatures ************ ************ ************ 
