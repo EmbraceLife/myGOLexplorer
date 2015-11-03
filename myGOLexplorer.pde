@@ -1,67 +1,38 @@
+// Key principles: 
 /*
-1. space: pause/ continue
- 2. c/C : clear up grid
- 3. r/R : reset a new random grid
- 4. z/Z : display red square, move mouse to select an area you want to zoom in
- 5. x/X : remember the area you selected
- 6. e/E : zoom in the area with full canvas
- 7. click to change life/death status of cells in zoom-in grid
- 8. s/S : save the changes 
- 9. e/E : zoom out 
- 10. space: to run or continue iterations on altered grid
- 11. n: to allow iteration step by step
- 11. press "1": run an iteration every 100 millis
- 12. press "2": run an iteration every 50 millis
- 13. press "3": run an iteration every 10 millis
- 14. press other keys: 100 millis every iteration
- 
- 
- */
-//*****************************************************************************************************************************
-// ************************* set up global variables for use *************************
-//*****************************************************************************************************************************
+1. as Natural as possible
+2. as logical as possible
+3. as simple as possible
+4. test every line if possible
+*/
 
-// 1. there must be cells: cellSize, enlargedSize(for selectedSquare)...
-// 2. there must be grids: cells, cellsBuffer, selectedSquare, selectedSquareBuffer
-// 3. there must be key location to remember: saveLocationX, saveLocationY for origin of selectedSquare in cells
-// 4. there must set probability of alive cells at initial stage: probabilityOfAliveAtStart
-// 5. there must set speed of regeneration of all cells: interval, lastRecordedTime
-// 6. there must differ alive and death color: alive, dead
-// 7. there must be many toggle buttons: pause, enlarge, referenceLocation, makeSelection, iterateStepy
+// ***********Global variables ***********
+
+// prestored creature names
+String[] creatureNames = {"ant"};
+int creatureId = 0;
+boolean selectCreatureMode = false;
 
 
-    
-    
-
-
-
-
-//Table creature1;
-
+//creature living in grid, grid saved in Table
 int R = 0;
 int C = 0;
 int[][] creatureGrid1; 
 
-
-
-//****************** 1. cellSize and enlargeSize 
-// Size of cells = 5 pixels X 5 pixel = Is it right            ????
+// creature is made of cells, cell with normal size and larger size
 int cellSize = 5;
-// size for enlarged selected areas
 int enlargeSize = cellSize * 2;
 
+// remember coordinate where zoom square start
 int xZoom = 0;
 int yZoom = 0;
 
-
-
-
-// *************** 2. start and end points of creatureGrid
-int startX = 1;
+// start and end coordinates of square for capturing creature
+int startX;
 int startY = 1;
 int endX = 2;
 int endY = 2;
-//int xCellOver, yCellOver;
+
 
 //****************** 3. saveLocationX, saveLocationY
 // when select an area, we need to remember/buffer the mouse Over location for cells

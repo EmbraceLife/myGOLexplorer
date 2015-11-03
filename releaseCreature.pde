@@ -4,17 +4,19 @@
 void releaseCreature() {
   
 
-  // load csv creature into a table
+  // conditions for loading creature
   if (pause && loadCreatureMode) {
+    
+    // load csv creature into a table
     Table creature1 = loadTable("simpleCreature1.csv", "header");
   
-    // total Rows and Cols creature grid takes
+    // turn Table int grid
     R = creature1.getRowCount();  // it is really just num of cells on y-axis
     C = creature1.getColumnCount(); // it is really just num of cells on x-axis
     creatureGrid1 = new int[C][R]; // ***make sure to define the length of int[][] here not at beginning
     
     
-    // create creatureGrid from table
+    // transfer value from Table to grid
     for (int i=0; i<C; i++) {
       for (int j=0; j<R; j++) {
         int num = creature1.getInt(j, i); // table.getInt(row, col);
@@ -22,6 +24,7 @@ void releaseCreature() {
       }
     }
     
+   // loading creature allowed only once 
    loadCreatureMode = !loadCreatureMode;
   }
   
@@ -31,7 +34,6 @@ void releaseCreature() {
   
   // display creatureBox and moving it with mouse
   int xCellOver = int(map(mouseX, 0, width, 0, (width-1)/cellSize));
-
   int yCellOver = int(map(mouseY, 0, height, 0, (height-1)/cellSize));
   
 
