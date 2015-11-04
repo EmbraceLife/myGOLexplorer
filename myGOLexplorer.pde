@@ -64,7 +64,8 @@ color dead = color(0);
 // ****************** 2. cells, cellsBuffer, selectedSquare, selectedSquareBuffer 
 // 1. building grids
 // Array of cells = to create a grid = the largest grid with smallest cells
-int[][] cells; 
+int nx, ny;
+int[][] cells = new int[nx][ny]; 
 // array of cells for selected area
 int[][] selectedSquare;
 
@@ -112,14 +113,16 @@ void setup() {
 
   // setup Canvas, cells grid, and selectedSquare grid
   size (601, 601);                            
-
-  cells = new int[(width-1)/cellSize][(height-1)/cellSize];        
-  cellsBuffer = new int[(width-1)/cellSize][(height-1)/cellSize];
+  nx = (width-1)/cellSize;
+  ny = (height-1)/cellSize;
+  
+  cells = new int[nx][ny];        
+  cellsBuffer = new int[nx][ny];
   //cellsBuffer = cells;   <-- This is problematic!!!
 
 
-  selectedSquare = new int[(width-1)/cellSize/2][(height-1)/cellSize/2];
-  selectedSquareBuffer = new int[(width-1)/cellSize/2][(height-1)/cellSize/2];
+  selectedSquare = new int[nx/2][ny/2];
+  selectedSquareBuffer = new int[nx/2][ny/2];
   
   
   noSmooth();                                 
@@ -369,8 +372,8 @@ void keyPressed() {
   // ************************ press c to set all cells to death value ************************
 
   if (key=='c' || key == 'C') {               // press C or c to Clear all
-    for (int x=0; x<(width-1)/cellSize; x++) {
-      for (int y=0; y<(height-1)/cellSize; y++) {
+    for (int x=0; x<nx; x++) {
+      for (int y=0; y<ny; y++) {
         cells[x][y] = 0; // Save all to zero
       }
     }
