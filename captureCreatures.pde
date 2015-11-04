@@ -63,3 +63,54 @@ void captureCreatures() {
   }
 }
  
+/*
+******** Another solution suggested by @_vk in processing forum to be implemented ************
+int n=10, m=20;
+ 
+int[][] grid = new int[n][m];
+int[][] grid2 = new int[n][m];
+ 
+//saveStrings() likes Strings arrays
+String[] saver = new String[n*m];
+ 
+void setup() {
+  // create a random 0 or 1 for each cell in the grid
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < m; j++) {
+      grid[i][j] = round(random(0, 1));
+    }
+  }
+ 
+  int iter = 0; 
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < m; j++) {
+      //concat data in a string, like:  "i:j:v"
+      saver [iter++] = i + ":" + j + ":" + grid[i][j];
+    }
+  }
+ 
+  //used data folder so the import goes as usual
+  saveStrings("data/st.txt", saver);
+ 
+  //loading saved data
+  String[] loaded = loadStrings("st.txt");
+ 
+  //parse it and assign to grid2
+  for (String s : loaded) {
+    String[] line = splitTokens(s, ":");
+    int i = int(line[0]);
+    int j = int(line[1]);
+    int v = int(line[2]);
+    grid2[i][j] = v;
+  }
+ 
+  //check grid2 against grid.. they are equal : -)
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < m; j++) {
+      println("at pos " + i + "." + j + " " +( grid[i][j] == grid2[i][j]));
+    }
+  }
+}
+
+*/
+ 
