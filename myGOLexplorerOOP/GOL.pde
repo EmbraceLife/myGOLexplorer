@@ -206,9 +206,7 @@ class GOL {
          data.lockAnchorOfCapturingBoxToggle = !data.lockAnchorOfCapturingBoxToggle;
       }
       println("anchor", data.xAnchorInSelectedSquare, ":", data.yAnchorInSelectedSquare);
-      println("hovering", data.xCellHoverInSelectedSquare, ":", data.yCellHoverInSelectedSquare);
-      
-    
+      println("hovering", data.xCellHoverInSelectedSquare, ":", data.yCellHoverInSelectedSquare); 
   }
 
   void displayCapturingBox() {
@@ -223,6 +221,23 @@ class GOL {
       }
     }
   }
+
+  void lockEndPointOfCapturingBoxInSelectedSquare() {
+
+    
+      data.xCellHoverInSelectedSquare = int(map(mouseX, 0, width, 0, data.selectedSquareWidthByCells));
+      data.yCellHoverInSelectedSquare = int(map(mouseY, 0, height, 0, data.selectedSquareWidthByCells));
+
+      if (data.lockEndPointOfCapturingBoxToggle) {
+         data.xEndPointInSelectedSquare = data.xCellHoverInSelectedSquare;
+         data.yEndPointInSelectedSquare = data.yCellHoverInSelectedSquare;
+         
+         data.lockEndPointOfCapturingBoxToggle = !data.lockEndPointOfCapturingBoxToggle;
+      }
+      println("end", data.xEndPointInSelectedSquare, ":", data.yEndPointInSelectedSquare);
+  }
+
+
 
 
   void clickChangeLifeDeath() {
@@ -252,6 +267,11 @@ class GOL {
   }
 
 
+  void lockEndPointOfCapturingBoxControl() {
+     if (key == 'w') {
+       data.lockEndPointOfCapturingBoxToggle = !data.lockEndPointOfCapturingBoxToggle;
+     }
+  }
 
   void lockAnchorOfCapturingBoxControl() {
     if (key == 'q') {

@@ -30,10 +30,10 @@ void draw() {
 
   gol.saveLifeDeathChangesToBoard();
   gol.displaySelectedSquare();
-  //println("anchor", data.xAnchorInSelectedSquare, ":", data.yAnchorInSelectedSquare);
-  //println("hovering", data.xCellHoverInSelectedSquare, ":", data.yCellHoverInSelectedSquare);
+  
   gol.lockAnchorOfCapturingBoxInSelectedSquare();
   gol.displayCapturingBox();
+  gol.lockEndPointOfCapturingBoxInSelectedSquare();
 
 } //<>//
 
@@ -51,7 +51,7 @@ void keyPressed() {
   gol.displaySelectedSquareControl();
   gol.saveLifeDeathChangesControl();
   gol.lockAnchorOfCapturingBoxControl();
- 
+  gol.lockEndPointOfCapturingBoxControl();
 } 
 
 
