@@ -1,6 +1,6 @@
 # myGOLexplorer
 
-my version is built upon [a processing demo](https://processing.org/examples/gameoflife.html) created by Joan Soler-Adillon. 
+my version is built upon [a processing demo](https://processing.org/examples/gameoflife.html) created by Joan Soler-Adillon and game of life example from [Nature of Code](http://natureofcode.com/) by Daniel Shiffman.
 
 **Note**: master branch is obsolete, and the latest branch is most updated version.
 
@@ -12,6 +12,7 @@ my version is built upon [a processing demo](https://processing.org/examples/gam
 * `n` : iterate step by step or spacebar to iterate repeatedly
 * press `1`, `2`, `3`: set iteration speed from every 10millis to 50millis to 100millis
 * `z` : hold `z`, moving mouse, to select zooming area
+* `b` : press `b`, to mark selecting box on the cell grid
 * `x`, `e`: press `x`, then press `z` to zoom in
 * click to change cell's death/life
 * `s`, `e`: press `s` and then `e`, to save changes into previous grid
