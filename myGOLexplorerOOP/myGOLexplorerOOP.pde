@@ -22,21 +22,31 @@ void draw() {
   
   gol.generationAtFrequency();
   gol.generateByStep();
-  gol.regenerateRandomCellsInGridPerform();
+  gol.randomizeGrid();
   gol.display();
-  gol.displaySelectedArea();
+  gol.displaySelectingBox();
   gol.captureSelectedSquare();
+  
+  gol.saveLifeDeathChangesToBoard();
   gol.displaySelectedSquare();
+  
 }
 
 
 
 void keyPressed() {
-
+ //<>//
   gol.generationDurationControl();
   gol.stepControl();
-  gol.pauseControl();  //<>//
+  gol.pauseControl(); 
   gol.randomControl();
-  gol.selectControl();
+  gol.captureSelectControl();
   gol.displaySelectedSquareControl();
-} //<>//
+  gol.saveLifeDeathChangesControl();
+} 
+
+
+void mouseClicked() {
+  
+  gol.clickChangeLifeDeath();
+}
