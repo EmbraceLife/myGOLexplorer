@@ -115,7 +115,7 @@ class GOL {
 
 
 
-  void specifyAnchorPointOfSelectingBox() {
+  void specifyAnchorPointOfSelectingBoxInBoard() {
     int xCellHover = int(map(mouseX, 0, width, 0, (width)/data.cellWidth));
     xCellHover = constrain(xCellHover, 0, (width)/data.cellWidth - data.selectedSquareWidthByCells);         
 
@@ -133,7 +133,7 @@ class GOL {
     if (keyPressed == true && data.pauseToggle) {
       if (key == 'z' || key == 'Z') {
 
-        specifyAnchorPointOfSelectingBox();
+        specifyAnchorPointOfSelectingBoxInBoard();
         stroke(200, 0, 150);
         noFill();
         rect(data.xZoom*data.cellWidth, data.yZoom*data.cellWidth, data.selectedSquareWidthByCells*data.cellWidth-1, data.selectedSquareWidthByCells*data.cellWidth-1);
@@ -156,7 +156,7 @@ class GOL {
   void captureSelectedSquare() {  
 
     if (data.selectToggle) {  
-      specifyAnchorPointOfSelectingBox();
+      specifyAnchorPointOfSelectingBoxInBoard();
       
       for (int i = 0; i < data.selectedSquareWidthByCells; i++) {
         for (int j = 0; j < data.selectedSquareWidthByCells; j++) {
@@ -174,8 +174,6 @@ class GOL {
       data.selectToggle = !data.selectToggle;  // lock a piece of memory
     }
   }
-
-
 
 
 
