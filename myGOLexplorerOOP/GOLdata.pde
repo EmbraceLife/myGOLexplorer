@@ -9,6 +9,10 @@ class GOLdata {
   Cell[][] selectedSquare;
   int selectedSquareWidthByCells;
   int xZoom, yZoom;
+  int xAnchorInSelectedSquare, yAnchorInSelectedSquare;
+  int zoomedCellWidth;
+  int xCellHoverInSelectedSquare;
+  int yCellHoverInSelectedSquare;
   
   int generationDuration; // used by two methods
   int lastRecordedTime;
@@ -19,6 +23,7 @@ class GOLdata {
   boolean selectToggle;
   boolean markingSelectingBoxToggle;
   boolean displaySelectedToggle;
+  boolean lockAnchorOfCapturingBoxToggle;
   boolean saveLifeDeathChangeToggle;
   boolean cleanUpToggle;
   GOLdata() {
@@ -29,8 +34,11 @@ class GOLdata {
    board = new Cell[boardColumns][boardRows];
    
    selectedSquareWidthByCells = 40;
+   zoomedCellWidth = width/selectedSquareWidthByCells;
    selectedSquare = new Cell[selectedSquareWidthByCells][selectedSquareWidthByCells];
-  
+   //xCellHoverInSelectedSquare = int(map(mouseX, 0, width, 0, selectedSquareWidthByCells));
+   //yCellHoverInSelectedSquare = int(map(mouseY, 0, height, 0, selectedSquareWidthByCells));
+      
    
    generationDuration = 100;
    
@@ -41,6 +49,7 @@ class GOLdata {
    selectToggle = false;
    markingSelectingBoxToggle = false;
    displaySelectedToggle = false;
+   lockAnchorOfCapturingBoxToggle = false;
    saveLifeDeathChangeToggle = false;
   }
 }

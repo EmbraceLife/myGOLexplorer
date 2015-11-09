@@ -27,15 +27,20 @@ void draw() {
   gol.displaySelectingBox();
   gol.markingSelectingBox();
   gol.captureSelectedSquare();
+
   gol.saveLifeDeathChangesToBoard();
   gol.displaySelectedSquare();
-  
-}
+  //println("anchor", data.xAnchorInSelectedSquare, ":", data.yAnchorInSelectedSquare);
+  //println("hovering", data.xCellHoverInSelectedSquare, ":", data.yCellHoverInSelectedSquare);
+  gol.lockAnchorOfCapturingBoxInSelectedSquare();
+  gol.displayCapturingBox();
+
+} //<>//
 
 
 
 void keyPressed() {
- //<>//
+
   gol.generationSpeedControl();
   gol.cleanUpControl();
   gol.stepControl();
@@ -45,6 +50,8 @@ void keyPressed() {
   gol.captureSelectControl();
   gol.displaySelectedSquareControl();
   gol.saveLifeDeathChangesControl();
+  gol.lockAnchorOfCapturingBoxControl();
+ 
 } 
 
 

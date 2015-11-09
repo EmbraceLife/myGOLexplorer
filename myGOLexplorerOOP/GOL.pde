@@ -21,7 +21,7 @@ class GOL {
       }
     }
   }
-  
+
   void cleanUpBoardCellsState() {
     for (int i = 0; i < data.boardColumns; i++) {
       for (int j = 0; j < data.boardRows; j++) {
@@ -107,8 +107,8 @@ class GOL {
 
   void cleanUpBoardGrid() {
     if (data.cleanUpToggle) {
-       cleanUpBoardCellsState(); 
-       
+      cleanUpBoardCellsState(); 
+
       data.cleanUpToggle = !data.cleanUpToggle;
     }
   }
@@ -125,6 +125,8 @@ class GOL {
     data.xZoom = xCellHover;
     data.yZoom = yCellHover;
   }
+
+
 
 
 
@@ -157,7 +159,7 @@ class GOL {
 
     if (data.selectToggle) {  
       specifyAnchorPointOfSelectingBoxInBoard();
-      
+
       for (int i = 0; i < data.selectedSquareWidthByCells; i++) {
         for (int j = 0; j < data.selectedSquareWidthByCells; j++) {
           data.selectedSquare[i][j] = new Cell(i*(width/data.selectedSquareWidthByCells), j*(width/data.selectedSquareWidthByCells), width/data.selectedSquareWidthByCells);
@@ -189,6 +191,40 @@ class GOL {
   }
 
 
+
+
+  void lockAnchorOfCapturingBoxInSelectedSquare() {
+
+    
+      data.xCellHoverInSelectedSquare = int(map(mouseX, 0, width, 0, data.selectedSquareWidthByCells));
+      data.yCellHoverInSelectedSquare = int(map(mouseY, 0, height, 0, data.selectedSquareWidthByCells));
+
+      if (data.lockAnchorOfCapturingBoxToggle) {
+         data.xAnchorInSelectedSquare = data.xCellHoverInSelectedSquare;
+         data.yAnchorInSelectedSquare = data.yCellHoverInSelectedSquare;
+         
+         data.lockAnchorOfCapturingBoxToggle = !data.lockAnchorOfCapturingBoxToggle;
+      }
+      println("anchor", data.xAnchorInSelectedSquare, ":", data.yAnchorInSelectedSquare);
+      println("hovering", data.xCellHoverInSelectedSquare, ":", data.yCellHoverInSelectedSquare);
+      
+    
+  }
+
+  void displayCapturingBox() {
+    if (data.displaySelectedToggle && keyPressed == true) {
+      if (key == 'a') {
+        noFill();
+        stroke(0, 200, 255);
+
+        rect(data.xAnchorInSelectedSquare*data.zoomedCellWidth, data.yAnchorInSelectedSquare*data.zoomedCellWidth, 
+          (data.xCellHoverInSelectedSquare-data.xAnchorInSelectedSquare)*data.zoomedCellWidth, 
+          (data.yCellHoverInSelectedSquare-data.yAnchorInSelectedSquare)*data.zoomedCellWidth);
+      }
+    }
+  }
+
+
   void clickChangeLifeDeath() {
     if (data.pauseToggle) {
       int xCellHover = int(map(mouseX, 0, width, 0, data.selectedSquareWidthByCells));
@@ -215,6 +251,13 @@ class GOL {
     }
   }
 
+
+
+  void lockAnchorOfCapturingBoxControl() {
+    if (key == 'q') {
+      data.lockAnchorOfCapturingBoxToggle = !data.lockAnchorOfCapturingBoxToggle;
+    }
+  }
 
 
   void saveLifeDeathChangesControl() {
@@ -260,14 +303,14 @@ class GOL {
       data.generationDuration = 100;
     }
   }
-  
-  
+
+
   void cleanUpControl() {
-     if (key == 'c') {
-        data.cleanUpToggle = !data.cleanUpToggle; 
-     }
+    if (key == 'c') {
+      data.cleanUpToggle = !data.cleanUpToggle;
+    }
   }
-  
+
 
   void randomControl() {
     if (key == 'r' || key == 'R') {
