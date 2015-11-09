@@ -20,7 +20,7 @@ class GOLdata {
   boolean markingSelectingBoxToggle;
   boolean displaySelectedToggle;
   boolean saveLifeDeathChangeToggle;
-  
+  boolean cleanUpToggle;
   GOLdata() {
 
    cellWidth = 5;
@@ -34,7 +34,7 @@ class GOLdata {
    
    generationDuration = 100;
    
-   
+   cleanUpToggle = false;
    stepToggle = false;
    pauseToggle = true;
    randomToggle = false;

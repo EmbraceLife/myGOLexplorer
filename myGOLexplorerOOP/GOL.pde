@@ -21,6 +21,15 @@ class GOL {
       }
     }
   }
+  
+  void cleanUpBoardCellsState() {
+    for (int i = 0; i < data.boardColumns; i++) {
+      for (int j = 0; j < data.boardRows; j++) {
+        data.board[i][j].state = 0;
+        data.board[i][j].previous = 0;
+      }
+    }
+  }
 
 
   void display() {
@@ -64,7 +73,7 @@ class GOL {
   }
 
 
-  void generationAtFrequency() { 
+  void autoGenerateWithDiffSpeed() { 
 
     if (!data.pauseToggle) {
 
@@ -95,6 +104,15 @@ class GOL {
       data.randomToggle = !data.randomToggle;
     }
   }
+
+  void cleanUpBoardGrid() {
+    if (data.cleanUpToggle) {
+       cleanUpBoardCellsState(); 
+       
+      data.cleanUpToggle = !data.cleanUpToggle;
+    }
+  }
+
 
 
   void specifyAnchorPointOfSelectingBox() {
@@ -232,7 +250,7 @@ class GOL {
 
 
 
-  void generationDurationControl() { 
+  void generationSpeedControl() { 
 
     if (key == '1') {
       data.generationDuration = 100;
@@ -244,6 +262,14 @@ class GOL {
       data.generationDuration = 100;
     }
   }
+  
+  
+  void cleanUpControl() {
+     if (key == 'c') {
+        data.cleanUpToggle = !data.cleanUpToggle; 
+     }
+  }
+  
 
   void randomControl() {
     if (key == 'r' || key == 'R') {

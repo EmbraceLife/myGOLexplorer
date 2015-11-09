@@ -19,8 +19,8 @@ void draw() {
   background(255);
 
   //gol.generate();
-  
-  gol.generationAtFrequency();
+  gol.cleanUpBoardGrid();
+  gol.autoGenerateWithDiffSpeed();
   gol.generateByStep();
   gol.randomizeGrid();
   gol.display();
@@ -36,7 +36,8 @@ void draw() {
 
 void keyPressed() {
  //<>//
-  gol.generationDurationControl();
+  gol.generationSpeedControl();
+  gol.cleanUpControl();
   gol.stepControl();
   gol.pauseControl(); 
   gol.randomControl();
