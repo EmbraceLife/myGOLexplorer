@@ -216,8 +216,8 @@ class GOL {
         stroke(0, 200, 255);
 
         rect(data.xAnchorInSelectedSquare*data.zoomedCellWidth, data.yAnchorInSelectedSquare*data.zoomedCellWidth, 
-          (data.xCellHoverInSelectedSquare-data.xAnchorInSelectedSquare)*data.zoomedCellWidth, 
-          (data.yCellHoverInSelectedSquare-data.yAnchorInSelectedSquare)*data.zoomedCellWidth);
+          (data.xCellHoverInSelectedSquare-data.xAnchorInSelectedSquare+1)*data.zoomedCellWidth, 
+          (data.yCellHoverInSelectedSquare-data.yAnchorInSelectedSquare+1)*data.zoomedCellWidth);
       }
     }
   }
@@ -237,6 +237,55 @@ class GOL {
       println("end", data.xEndPointInSelectedSquare, ":", data.yEndPointInSelectedSquare);
   }
 
+
+  void captureCreatureInTable() {
+
+     if (data.captureCreatureToggle) {
+     
+       
+       for (int i = data.xAnchorInSelectedSquare; i < data.xEndPointInSelectedSquare+1; i++) {
+         data.creatureTable.addColumn((i-data.xAnchorInSelectedSquare)+"", Table.INT);
+         
+         for (int j = data.yAnchorInSelectedSquare; j < data.yEndPointInSelectedSquare+1; j++) {
+           data.creatureTable.setInt(j-data.yAnchorInSelectedSquare,i-data.xAnchorInSelectedSquare,data.selectedSquare[i][j].state);
+         }
+       }
+       saveTable(data.creatureTable, "data/simpleCreature1.csv");
+       data.captureCreatureToggle = !data.captureCreatureToggle;
+ 
+     }   
+  }
+
+
+  void loadCreature() {
+     if (data.loadCreatureToggle) {
+       
+        data.creatureTable = loadTable("simpleCreature1.csv", "header");
+
+        int R = data.creatureTable.getRowCount();  
+        int C = data.creatureTable.getColumnCount(); 
+        data.creatureGrid = new Cell[C][R]; 
+    
+    
+        // transfer value from Table to grid
+        //for (int i=0; i<C; i++) {
+        //  for (int j=0; j<R; j++) {
+        //    int state = data.creatureTable.getInt(j, i); 
+        //    data.creatureGrid[i][j].state = state; 
+        //    println(data.creatureGrid[i][j].state);
+        //  }
+        //}
+      
+       data.loadCreatureToggle = !data.loadCreatureToggle;
+     }
+     
+  }
+
+
+  void releaseCreature() {
+   
+    
+  }
 
 
 
@@ -266,6 +315,18 @@ class GOL {
     }
   }
 
+  void loadCreatureControl() {
+     if (key == 'l') { 
+       data.loadCreatureToggle = !data.loadCreatureToggle;
+     }
+  }
+
+
+  void captureCreatureControl() {
+    if (key == 'p') {
+       data.captureCreatureToggle = !data.captureCreatureToggle; 
+    }
+  }
 
   void lockEndPointOfCapturingBoxControl() {
      if (key == 'w') {

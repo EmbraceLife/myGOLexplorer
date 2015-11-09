@@ -28,12 +28,15 @@ void draw() {
   gol.markingSelectingBox();
   gol.captureSelectedSquare();
 
+
   gol.saveLifeDeathChangesToBoard();
   gol.displaySelectedSquare();
   
   gol.lockAnchorOfCapturingBoxInSelectedSquare();
   gol.displayCapturingBox();
   gol.lockEndPointOfCapturingBoxInSelectedSquare();
+  gol.captureCreatureInTable();
+  gol.loadCreature();
 
 } //<>//
 
@@ -52,6 +55,8 @@ void keyPressed() {
   gol.saveLifeDeathChangesControl();
   gol.lockAnchorOfCapturingBoxControl();
   gol.lockEndPointOfCapturingBoxControl();
+  gol.captureCreatureControl();
+  gol.loadCreatureControl();
 } 
 
 

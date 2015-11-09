@@ -15,6 +15,10 @@ class GOLdata {
   int xCellHoverInSelectedSquare;
   int yCellHoverInSelectedSquare;
  
+ 
+  Table creatureTable;
+  Cell[][] creatureGrid;
+   
   
   int generationDuration; // used by two methods
   int lastRecordedTime;
@@ -28,6 +32,11 @@ class GOLdata {
   boolean lockAnchorOfCapturingBoxToggle, lockEndPointOfCapturingBoxToggle;
   boolean saveLifeDeathChangeToggle;
   boolean cleanUpToggle;
+  boolean captureCreatureToggle;
+  boolean loadCreatureToggle;
+  
+  
+  
   GOLdata() {
 
    cellWidth = 5;
@@ -38,9 +47,9 @@ class GOLdata {
    selectedSquareWidthByCells = 40;
    zoomedCellWidth = width/selectedSquareWidthByCells;
    selectedSquare = new Cell[selectedSquareWidthByCells][selectedSquareWidthByCells];
-   //xCellHoverInSelectedSquare = int(map(mouseX, 0, width, 0, selectedSquareWidthByCells));
-   //yCellHoverInSelectedSquare = int(map(mouseY, 0, height, 0, selectedSquareWidthByCells));
-      
+
+   creatureTable = new Table();
+        
    
    generationDuration = 100;
    
@@ -54,5 +63,7 @@ class GOLdata {
    lockAnchorOfCapturingBoxToggle = false;
    lockEndPointOfCapturingBoxToggle = false;
    saveLifeDeathChangeToggle = false;
+   captureCreatureToggle = false;
+   loadCreatureToggle = false;
   }
 }
