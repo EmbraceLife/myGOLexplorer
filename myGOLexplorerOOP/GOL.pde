@@ -97,7 +97,16 @@ class GOL {
   }
 
 
+  void specifyAnchorPointOfSelectingBox() {
+    int xCellHover = int(map(mouseX, 0, width, 0, (width)/data.cellWidth));
+    xCellHover = constrain(xCellHover, 0, (width)/data.cellWidth - data.selectedSquareWidthByCells);         
 
+    int yCellHover = int(map(mouseY, 0, (height), 0, (height)/data.cellWidth));
+    yCellHover = constrain(yCellHover, 0, (height)/data.cellWidth - data.selectedSquareWidthByCells); 
+
+    data.xZoom = xCellHover;
+    data.yZoom = yCellHover;
+  }
 
 
 
@@ -106,15 +115,10 @@ class GOL {
     if (keyPressed == true && data.pauseToggle) {
       if (key == 'z' || key == 'Z') {
 
-        int xCellHover = int(map(mouseX, 0, width, 0, (width)/data.cellWidth));
-        xCellHover = constrain(xCellHover, 0, (width)/data.cellWidth - data.selectedSquareWidthByCells);         
-
-        int yCellHover = int(map(mouseY, 0, (height), 0, (height)/data.cellWidth));
-        yCellHover = constrain(yCellHover, 0, (height)/data.cellWidth - data.selectedSquareWidthByCells);  
-
+        specifyAnchorPointOfSelectingBox();
         stroke(200, 0, 150);
         noFill();
-        rect(xCellHover*data.cellWidth, yCellHover*data.cellWidth, data.selectedSquareWidthByCells*data.cellWidth-1, data.selectedSquareWidthByCells*data.cellWidth-1);
+        rect(data.xZoom*data.cellWidth, data.yZoom*data.cellWidth, data.selectedSquareWidthByCells*data.cellWidth-1, data.selectedSquareWidthByCells*data.cellWidth-1);
       }
     }
   }
@@ -123,23 +127,14 @@ class GOL {
 
   void captureSelectedSquare() {  
 
-    int xCellHover = int(map(mouseX, 0, width, 0, (width)/data.cellWidth));
-    xCellHover = constrain(xCellHover, 0, (width)/data.cellWidth-data.selectedSquareWidthByCells);         
-
-    int yCellHover = int(map(mouseY, 0, height, 0, (height)/data.cellWidth));
-    yCellHover = constrain(yCellHover, 0, (height)/data.cellWidth-data.selectedSquareWidthByCells);  
-
-
-
     if (data.selectToggle) {  
+      specifyAnchorPointOfSelectingBox();
+      
       for (int i = 0; i < data.selectedSquareWidthByCells; i++) {
         for (int j = 0; j < data.selectedSquareWidthByCells; j++) {
           data.selectedSquare[i][j] = new Cell(i*(width/data.selectedSquareWidthByCells), j*(width/data.selectedSquareWidthByCells), width/data.selectedSquareWidthByCells);
         }
       }
-
-      data.xZoom = xCellHover;
-      data.yZoom = yCellHover;
 
       for (int xCell=data.xZoom; xCell<data.xZoom+data.selectedSquareWidthByCells; xCell++) {
         for (int yCell=data.yZoom; yCell<data.yZoom+data.selectedSquareWidthByCells; yCell++) {
