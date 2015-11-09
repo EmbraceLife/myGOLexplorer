@@ -25,6 +25,7 @@ void draw() {
   gol.randomizeGrid();
   gol.display();
   gol.displaySelectingBox();
+  gol.markingSelectingBox();
   gol.captureSelectedSquare();
   
   gol.saveLifeDeathChangesToBoard();
@@ -34,12 +35,13 @@ void draw() {
 
 
 
-void keyPressed() {
- //<>//
+void keyPressed() { //<>//
+
   gol.generationDurationControl();
   gol.stepControl();
   gol.pauseControl(); 
   gol.randomControl();
+  gol.markingSelectingBoxControl();
   gol.captureSelectControl();
   gol.displaySelectedSquareControl();
   gol.saveLifeDeathChangesControl();

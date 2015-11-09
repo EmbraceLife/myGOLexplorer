@@ -153,6 +153,17 @@ class GOL {
   }
 
 
+  void markingSelectingBox() {
+    if (data.markingSelectingBoxToggle) {
+      noFill();
+      stroke(255, 200, 0);
+      rect(data.xZoom*data.cellWidth, data.yZoom*data.cellWidth, data.selectedSquareWidthByCells*data.cellWidth-1, data.selectedSquareWidthByCells*data.cellWidth-1);
+    }
+  }
+
+
+
+
 
   void displaySelectedSquare() {
     if (data.displaySelectedToggle) { 
@@ -172,35 +183,31 @@ class GOL {
 
       if (data.selectedSquare[xCellHover][yCellHover].state == 0) {
         data.selectedSquare[xCellHover][yCellHover].state = 1;
-       
       } else {
         data.selectedSquare[xCellHover][yCellHover].state = 0;
-       
       }
-      
-      
     }
   }
 
 
   void saveLifeDeathChangesToBoard() {
-     if (data.saveLifeDeathChangeToggle) {
-       for (int i = data.xZoom; i < data.xZoom+data.selectedSquareWidthByCells; i++) {
-          for (int j = data.yZoom; j < data.yZoom+data.selectedSquareWidthByCells; j++) {
-            data.board[i][j].state = data.selectedSquare[i-data.xZoom][j-data.yZoom].state;
-          }
-       }
-       
-       data.saveLifeDeathChangeToggle = !data.saveLifeDeathChangeToggle;
-     }
+    if (data.saveLifeDeathChangeToggle) {
+      for (int i = data.xZoom; i < data.xZoom+data.selectedSquareWidthByCells; i++) {
+        for (int j = data.yZoom; j < data.yZoom+data.selectedSquareWidthByCells; j++) {
+          data.board[i][j].state = data.selectedSquare[i-data.xZoom][j-data.yZoom].state;
+        }
+      }
+
+      data.saveLifeDeathChangeToggle = !data.saveLifeDeathChangeToggle;
+    }
   }
 
 
 
   void saveLifeDeathChangesControl() {
-     if (key == 's' || key == 'S') {
-        data.saveLifeDeathChangeToggle = !data.saveLifeDeathChangeToggle; 
-     }
+    if (key == 's' || key == 'S') {
+      data.saveLifeDeathChangeToggle = !data.saveLifeDeathChangeToggle;
+    }
   }
 
 
@@ -218,6 +225,15 @@ class GOL {
       data.selectToggle = !data.selectToggle;
     }
   }
+
+
+  void markingSelectingBoxControl() {
+    if (key == 'b') {
+      data.markingSelectingBoxToggle = !data.markingSelectingBoxToggle;
+    }
+  }
+
+
 
   void generationDurationControl() { 
 

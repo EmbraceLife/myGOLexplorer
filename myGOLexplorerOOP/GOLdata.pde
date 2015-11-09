@@ -17,6 +17,7 @@ class GOLdata {
   boolean pauseToggle;
   boolean randomToggle;
   boolean selectToggle;
+  boolean markingSelectingBoxToggle;
   boolean displaySelectedToggle;
   boolean saveLifeDeathChangeToggle;
   
@@ -38,6 +39,7 @@ class GOLdata {
    pauseToggle = true;
    randomToggle = false;
    selectToggle = false;
+   markingSelectingBoxToggle = false;
    displaySelectedToggle = false;
    saveLifeDeathChangeToggle = false;
   }
