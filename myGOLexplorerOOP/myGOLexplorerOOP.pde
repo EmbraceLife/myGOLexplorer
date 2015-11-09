@@ -27,7 +27,6 @@ void draw() {
   gol.displaySelectingBox();
   gol.markingSelectingBox();
   gol.captureSelectedSquare();
-  
   gol.saveLifeDeathChangesToBoard();
   gol.displaySelectedSquare();
   
@@ -35,8 +34,8 @@ void draw() {
 
 
 
-void keyPressed() { //<>//
-
+void keyPressed() {
+ //<>//
   gol.generationDurationControl();
   gol.stepControl();
   gol.pauseControl(); 

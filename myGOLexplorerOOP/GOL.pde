@@ -124,6 +124,16 @@ class GOL {
   }
 
 
+  void markingSelectingBox() {
+    if (data.markingSelectingBoxToggle) {
+      noFill();
+      stroke(255, 200, 0);
+      rect(data.xZoom*data.cellWidth, data.yZoom*data.cellWidth, data.selectedSquareWidthByCells*data.cellWidth-1, data.selectedSquareWidthByCells*data.cellWidth-1);
+    }
+  }
+
+
+
 
   void captureSelectedSquare() {  
 
@@ -147,14 +157,6 @@ class GOL {
     }
   }
 
-
-  void markingSelectingBox() {
-    if (data.markingSelectingBoxToggle) {
-      noFill();
-      stroke(255, 200, 0);
-      rect(data.xZoom*data.cellWidth, data.yZoom*data.cellWidth, data.selectedSquareWidthByCells*data.cellWidth-1, data.selectedSquareWidthByCells*data.cellWidth-1);
-    }
-  }
 
 
 
