@@ -10,21 +10,14 @@ class GOL {
   GOL() {
 
     data = new GOLdata();
-    randomizeGrid();
+    regenerateRandomCellsInGrid();
   }
 
-  void randomizeGrid() {
+  void regenerateRandomCellsInGrid() {
     for (int i = 0; i < data.columns; i++) {
       for (int j = 0; j < data.rows; j++) {
         data.board[i][j] = new Cell(i*data.w, j*data.w, data.w);
-      }
-    }
-  }
-
-  void randomizeGrid(int selectedWidth) {
-    for (int i = 0; i < selectedWidth; i++) {
-      for (int j = 0; j < selectedWidth; j++) {
-        data.board[i][j] = new Cell(i*width/selectedWidth, j*width/selectedWidth, width/selectedWidth);
+        //data.board[i][j].display();
       }
     }
   }
@@ -66,8 +59,10 @@ class GOL {
 
 
 
-  // This is the easy part, just draw the cells, fill 255 for '1', fill 0 for '0'
+  //// This is the easy part, just draw the cells, fill 255 for '1', fill 0 for '0'
   void display() {
+
+
     for ( int i = 0; i < data.columns; i++) {
       for ( int j = 0; j < data.rows; j++) {
         data.board[i][j].display();
@@ -75,12 +70,14 @@ class GOL {
     }
   }
 
-  void display(int selectedWidth, int selectedHeight) {
-    for ( int i = 0; i < data.columns; i++) {
-      for ( int j = 0; j < data.rows; j++) {
-        data.board[i][j].display();
+  void displaySelectedSquare() {
+    if (data.displaySelectedToggle) { 
+      for ( int i = 0; i < data.selectedWidth; i++) {
+        for ( int j = 0; j < data.selectedWidth; j++) {
+          data.selectedSquare[i][j].display();
+        }
       }
-    }      
+    }
   }
 
 
@@ -115,130 +112,117 @@ class GOL {
     }
   }
 
-  void randomizeGridPerform() {
+  void regenerateRandomCellsInGridPerform() {
     if (data.randomToggle) {
-      randomizeGrid();
+      regenerateRandomCellsInGrid();
       data.randomToggle = !data.randomToggle;
     }
-    
   }
 
 
   /* How to make multiple method constructors
    */
-  void displaySelectedArea(int selectedColWidth, int selectedRowHeight) {
-
-    if (keyPressed == true && data.pauseToggle) {
-      if (key == 'z' || key == 'Z') {
-
-        int xCellOver = int(map(mouseX, 0, width, 0, (width)/data.w));
-        xCellOver = constrain(xCellOver, 0, (width)/data.w - selectedColWidth);         
-
-        int yCellOver = int(map(mouseY, 0, (height), 0, (height)/data.w));
-        yCellOver = constrain(yCellOver, 0, (height)/data.w - selectedRowHeight);  
-
-        stroke(200, 0, 150);
-        noFill();
-        rect(xCellOver*data.w, yCellOver*data.w, selectedColWidth*data.w-1, selectedRowHeight*data.w-1);
-      }
-    }
-  }
-
-  /* How to constrain the effective area for mouseX, mouseY
-   How to press key to perform a function
-   */
   void displaySelectedArea() {
-    int selectedWidth = 60;
-    int selectedHeight = 60;
+
     if (keyPressed == true && data.pauseToggle) {
       if (key == 'z' || key == 'Z') {
 
         int xCellOver = int(map(mouseX, 0, width, 0, (width)/data.w));
-        xCellOver = constrain(xCellOver, 0, (width)/data.w-data.selectedWidth);         
+        xCellOver = constrain(xCellOver, 0, (width)/data.w - data.selectedWidth);         
 
         int yCellOver = int(map(mouseY, 0, (height), 0, (height)/data.w));
-        yCellOver = constrain(yCellOver, 0, (height)/data.w-selectedHeight);  
+        yCellOver = constrain(yCellOver, 0, (height)/data.w - data.selectedWidth);  
 
         stroke(200, 0, 150);
         noFill();
-        rect(xCellOver*data.w, yCellOver*data.w, data.selectedWidth*data.w-1, selectedHeight*data.w-1);
+        rect(xCellOver*data.w, yCellOver*data.w, data.selectedWidth*data.w-1, data.selectedWidth*data.w-1);
       }
     }
   }
 
 
 
+  void captureSelectedSquare() {  
+
+    // ***** if xCellOver as local variable, every frame-run through this function, xCellOver is new
+
+    // let mouse hovering on cells not on pixels
+    int xCellOver = int(map(mouseX, 0, width, 0, (width)/data.w));
+
+    xCellOver = constrain(xCellOver, 0, (width)/data.w-data.selectedWidth);         
+
+    // mouseY or yCellOver can hover over any cell of cells grid, but not on pixels
+    int yCellOver = int(map(mouseY, 0, height, 0, (height)/data.w));
+
+    // constrain yCellOver/mouseY only hover on first half of rows of cells grid
+    yCellOver = constrain(yCellOver, 0, (height)/data.w-data.selectedWidth);  
 
 
 
-    
-//void captureSelectedSquare() {  
- 
-//  // ***** if xCellOver as local variable, every frame-run through this function, xCellOver is new
- 
-// // let mouse hovering on cells not on pixels
-// int xCellOver = int(map(mouseX, 0, width, 0, (width)/data.w));
- 
-// int selectedWidth = 
-// xCellOver = constrain(xCellOver, 0, (width)/data.w-data.selectedWidth);         
+    if (data.selectToggle) {  
+      for (int i = 0; i < data.selectedWidth; i++) {
+        for (int j = 0; j < data.selectedWidth; j++) {
+          data.selectedSquare[i][j] = new Cell(i*(width/data.selectedWidth), j*(width/data.selectedWidth), width/data.selectedWidth);
+        }
+      }
 
-// // mouseY or yCellOver can hover over any cell of cells grid, but not on pixels
-// int yCellOver = int(map(mouseY, 0, height, 0, (height)/data.w));
 
-// // constrain yCellOver/mouseY only hover on first half of rows of cells grid
-// yCellOver = constrain(yCellOver, 0, (height)/data.w-data.selectedHeight);  
+      // press x to remember the start point of selection square
+      data.xZoom = xCellOver;
+      data.yZoom = yCellOver;
 
-  
-  
-// if (selectToggle) {  
-    
-//   // press x to remember the start point of selection square
-//   xZoom = xCellOver;
-//   yZoom = yCellOver;
-     
-//   // record the selected square only once for all frame loops later
-//   for (int xCell=xZoom; xCell<xZoom+data.selectedWidth; xCell++) {
-//     for (int yCell=yZoom; yCell<yZoom+data.selectedHeight; yCell++) {
-        
-//       // ***********as xCellOver is fixed by mouseX, xCell-xCellOver = 0 to 60*************
-        
-//       // *********** transfer values of cells grid to them
-//       selectedSquare[xCell-xZoom][yCell-yZoom] = cellsBuffer[xCell][yCell];
-//       selectedSquareBuffer[xCell-xZoom][yCell-yZoom] = cellsBuffer[xCell][yCell];
-//     }
-      
-//   selectToggle = !selectToggle;
-// }
-    
-    
+      // record the selected square only once for all frame loops later
+      for (int xCell=data.xZoom; xCell<data.xZoom+data.selectedWidth; xCell++) {
+        for (int yCell=data.yZoom; yCell<data.yZoom+data.selectedWidth; yCell++) {
 
-// }
-  
-// // press e to draw the selected square on full canvas
-// if (enlargeToggle) {
-      
+          data.selectedSquare[xCell-data.xZoom][yCell-data.yZoom].state = data.board[xCell][yCell].state;
+          data.selectedSquare[xCell-data.xZoom][yCell-data.yZoom].savePrevious();
+          //data.selectedSquare[xCell-data.xZoom][yCell-data.yZoom].display();
+        }
+      }
+      data.selectToggle = !data.selectToggle;
+    }
+  }
 
-//     // ********* let saveLocationX and Y to remember the selected (mouseX, mouseY) or (xCellOver,yCellOver) 
-//     saveLocationX = xZoom;
-//     saveLocationY = yZoom;
-      
-      
-      
-//     // draw the selected square
-//     drawCellsGrid(enlargeSize, selectedSquare);
-      
-      
-//     // console: zoom x y coordinates
-//     int xCellOverZoom = int(map(mouseX, 0, width-1, 0, (width-1)/enlargeSize));
-//     int yCellOverZoom = int(map(mouseY, 0, height-1, 0, (height-1)/enlargeSize));
-//     println("zoom ", xCellOverZoom, ":", yCellOverZoom);
-  
-  
-// }
+  // // press e to draw the selected square on full canvas
+  // if (data.enlargeToggle) {
 
-//}
-      
 
+  //     // ********* let saveLocationX and Y to remember the selected (mouseX, mouseY) or (xCellOver,yCellOver) 
+  //     saveLocationX = xZoom;
+  //     saveLocationY = yZoom;
+
+
+
+  //     // draw the selected square
+  //     data.selectedSquare.
+
+
+  //     // console: zoom x y coordinates
+  //     int xCellOverZoom = int(map(mouseX, 0, width-1, 0, (width-1)/enlargeSize));
+  //     int yCellOverZoom = int(map(mouseY, 0, height-1, 0, (height-1)/enlargeSize));
+  //     println("zoom ", xCellOverZoom, ":", yCellOverZoom);
+
+
+  // }
+
+  //}
+
+
+  void displaySelectedSquareControl() {
+    if (key == 'e' || key == 'E') {
+      data.displaySelectedToggle = !data.displaySelectedToggle;
+    }
+  }
+
+
+
+
+  void selectControl() {
+    if (key == 'x' || key == 'X') {
+      data.selectToggle = !data.selectToggle;
+    }
+  }
 
   void generationDurationControl() { 
 
@@ -272,5 +256,4 @@ class GOL {
       data.pauseToggle = !data.pauseToggle;
     }
   }
-
 }

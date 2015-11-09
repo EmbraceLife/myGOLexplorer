@@ -22,9 +22,11 @@ void draw() {
   
   gol.generationAtFrequency();
   gol.generateByStep();
-  gol.randomizeGridPerform();
+  gol.regenerateRandomCellsInGridPerform();
   gol.display();
-  gol.displaySelectedArea(20,20);
+  gol.displaySelectedArea();
+  gol.captureSelectedSquare();
+  gol.displaySelectedSquare();
 }
 
 
@@ -33,6 +35,8 @@ void keyPressed() {
 
   gol.generationDurationControl();
   gol.stepControl();
-  gol.pauseControl(); 
+  gol.pauseControl();  //<>//
   gol.randomControl();
+  gol.selectControl();
+  gol.displaySelectedSquareControl();
 } //<>//

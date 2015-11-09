@@ -14,11 +14,11 @@ class GOLdata {
   boolean pauseToggle;
   boolean randomToggle;
   boolean selectToggle;
+  boolean displaySelectedToggle;
   
   GOLdata() {
     
-   selectedWidth = 60;
-   //selectedHeight = 60;
+   selectedWidth = 30;
    w = 5;
    columns = width/w;
    rows = height/w;
@@ -28,6 +28,8 @@ class GOLdata {
    stepToggle = false;
    pauseToggle = true;
    randomToggle = false;
+   selectToggle = false;
+   displaySelectedToggle = false;
    //lastRecordedTime;
   }
 }
