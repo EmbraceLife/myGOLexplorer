@@ -260,21 +260,23 @@ class GOL {
   void loadCreature() {
      if (data.loadCreatureToggle) {
        
-        data.creatureTable = loadTable("simpleCreature1.csv", "header");
+        data.creatureLoadTable = loadTable("data/simpleCreature1.csv", "header");
 
-        int R = data.creatureTable.getRowCount();  
-        int C = data.creatureTable.getColumnCount(); 
-        data.creatureGrid = new Cell[C][R]; 
+         data.creatureRwidth = data.creatureLoadTable.getRowCount();  
+         data.creatureCheight = data.creatureLoadTable.getColumnCount(); 
+        data.creatureGrid = new Cell[data.creatureCheight][data.creatureRwidth]; 
+        println(data.creatureRwidth, ":", data.creatureCheight);
     
-    
-        // transfer value from Table to grid
-        //for (int i=0; i<C; i++) {
-        //  for (int j=0; j<R; j++) {
-        //    int state = data.creatureTable.getInt(j, i); 
-        //    data.creatureGrid[i][j].state = state; 
-        //    println(data.creatureGrid[i][j].state);
-        //  }
-        //}
+        //transfer value from Table to grid
+        for (int i=0; i<data.creatureCheight; i++) {
+         for (int j=0; j<data.creatureRwidth; j++) {
+           int value = data.creatureLoadTable.getInt(j, i);
+           println(value);
+           data.creatureGrid[i][j] = new Cell(i*data.selectedSquareWidthByCells, j*data.selectedSquareWidthByCells, data.selectedSquareWidthByCells);
+           data.creatureGrid[i][j].state = value; 
+           println(data.creatureGrid[i][j].state);
+         }
+        }
       
        data.loadCreatureToggle = !data.loadCreatureToggle;
      }
@@ -283,7 +285,35 @@ class GOL {
 
 
   void releaseCreature() {
-   
+     
+     data.xCellHoverInSelectedSquare = int(map(mouseX, 0, width, 0, data.selectedSquareWidthByCells));
+     data.yCellHoverInSelectedSquare = int(map(mouseY, 0, height, 0, data.selectedSquareWidthByCells)); 
+    if (keyPressed == true && data.pauseToggle) {
+     
+     if (key == 'v') {
+       noFill();
+       stroke(0,0,255);
+       rect(data.xCellHoverInSelectedSquare*data.zoomedCellWidth, 
+           data.yCellHoverInSelectedSquare*data.zoomedCellWidth, 
+           data.creatureCheight*data.zoomedCellWidth, 
+           data.creatureRwidth*data.zoomedCellWidth   );
+           
+       //println("releaseCreatureAt:", data.xCellHoverInSelectedSquare, data.yCellHoverInSelectedSquare);
+       //println("width:height ", data.creatureRwidth, ":", data.creatureCheight);
+     }
+    }
+  
+  // press m to insert creature in grid into cells grid of canvas
+   if (data.pauseToggle && data.releaseCreatureToggle) {
+    for (int i = data.xCellHoverInSelectedSquare; i < data.xCellHoverInSelectedSquare+data.creatureRwidth; i++) {
+      for (int j = data.yCellHoverInSelectedSquare; j < data.yCellHoverInSelectedSquare+data.creatureCheight; j++) {
+ 
+        data.selectedSquare[i][j].state = data.creatureGrid[i-data.xCellHoverInSelectedSquare][j-data.yCellHoverInSelectedSquare].state; // careful of [][] inside order
+      }
+    }
+    data.releaseCreatureToggle = !data.releaseCreatureToggle;
+   }
+    
     
   }
 
@@ -314,6 +344,17 @@ class GOL {
       data.saveLifeDeathChangeToggle = !data.saveLifeDeathChangeToggle;
     }
   }
+
+
+  void releaseCreatureControl() {
+     if (key == 'm') {
+       
+        data.releaseCreatureToggle = !data.releaseCreatureToggle; 
+     }
+  }
+
+
+
 
   void loadCreatureControl() {
      if (key == 'l') { 

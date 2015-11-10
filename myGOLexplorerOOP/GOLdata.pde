@@ -17,7 +17,12 @@ class GOLdata {
  
  
   Table creatureTable;
+  Table creatureLoadTable;
   Cell[][] creatureGrid;
+  int creatureRwidth, creatureCheight;
+  boolean captureCreatureToggle;
+  boolean loadCreatureToggle;
+  boolean releaseCreatureToggle;
    
   
   int generationDuration; // used by two methods
@@ -32,8 +37,7 @@ class GOLdata {
   boolean lockAnchorOfCapturingBoxToggle, lockEndPointOfCapturingBoxToggle;
   boolean saveLifeDeathChangeToggle;
   boolean cleanUpToggle;
-  boolean captureCreatureToggle;
-  boolean loadCreatureToggle;
+
   
   
   
@@ -65,5 +69,6 @@ class GOLdata {
    saveLifeDeathChangeToggle = false;
    captureCreatureToggle = false;
    loadCreatureToggle = false;
+   releaseCreatureToggle = false;
   }
 }

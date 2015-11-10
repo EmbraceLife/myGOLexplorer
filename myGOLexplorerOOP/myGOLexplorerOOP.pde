@@ -37,6 +37,7 @@ void draw() {
   gol.lockEndPointOfCapturingBoxInSelectedSquare();
   gol.captureCreatureInTable();
   gol.loadCreature();
+  gol.releaseCreature();
 
 } //<>//
 
@@ -57,6 +58,7 @@ void keyPressed() {
   gol.lockEndPointOfCapturingBoxControl();
   gol.captureCreatureControl();
   gol.loadCreatureControl();
+  gol.releaseCreatureControl();
 } 
 
 
